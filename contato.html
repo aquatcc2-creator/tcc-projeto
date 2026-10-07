@@ -7,52 +7,44 @@
 
     <title>Contato | Aqua Track</title>
 
-    <!-- Fonte -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body class="contato-page">
 
     <!-- ================= HEADER ================= -->
 
     <header>
-
         <div class="logo">
             <i class="fa-solid fa-droplet"></i>
             <span>Aqua <b>Track</b></span>
         </div>
 
         <nav>
-
             <a href="index.html">Início</a>
-
+            <a href="index.html#secao-ph">O que é pH?</a>
             <a href="sobre.html">Sobre</a>
-
             <a href="contato.html" class="ativo">Contato</a>
 
             <a href="login.html" class="btn-primary">
                 Entrar
                 <i class="fa-solid fa-arrow-right"></i>
             </a>
-
         </nav>
-
     </header>
 
 
     <!-- ================= HERO ================= -->
 
-    <section class="hero">
+    <section class="contato-hero">
 
-        <div class="hero-text">
+        <div class="contato-hero-text">
 
             <h1>
                 ENTRE EM <span>CONTATO</span>
@@ -71,10 +63,8 @@
 
         </div>
 
-        <div class="hero-icone">
-
+        <div class="contato-hero-icone">
             <i class="fa-solid fa-paper-plane"></i>
-
         </div>
 
     </section>
@@ -88,136 +78,136 @@
 
         <div class="card-formulario">
 
-    <div class="titulo-card">
+            <div class="titulo-card">
 
-        <div class="icone-titulo">
-            <i class="fa-regular fa-message"></i>
-        </div>
+                <div class="icone-titulo">
+                    <i class="fa-regular fa-message"></i>
+                </div>
 
-        <div>
-            <h2>Fale conosco</h2>
+                <div>
+                    <h2>Fale conosco</h2>
 
-            <p>
-                Tem alguma dúvida? Nossa equipe está pronta para ajudar.
-            </p>
-        </div>
-
-    </div>
-
-
-    <form id="formContato">
-
-        <div class="campo">
-
-            <label for="nome">
-                Nome
-            </label>
-
-            <div class="input-box">
-
-                <i class="fa-solid fa-user"></i>
-
-                <input
-                    type="text"
-                    id="nome"
-                    name="nome"
-                    placeholder="Digite seu nome"
-                    required
-                >
+                    <p>
+                        Tem alguma dúvida? Nossa equipe está pronta para ajudar.
+                    </p>
+                </div>
 
             </div>
 
+
+            <form id="formContato">
+
+                <div class="campo">
+
+                    <label for="nome">
+                        Nome
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fa-solid fa-user"></i>
+
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            placeholder="Digite seu nome"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="email">
+                        E-mail
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fa-solid fa-envelope"></i>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Digite seu e-mail"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="assunto">
+                        Assunto
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fa-solid fa-tag"></i>
+
+                        <input
+                            type="text"
+                            id="assunto"
+                            name="assunto"
+                            placeholder="Digite o assunto"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="mensagem">
+                        Mensagem
+                    </label>
+
+                    <div class="textarea-box">
+
+                        <i class="fa-solid fa-pen"></i>
+
+                        <textarea
+                            id="mensagem"
+                            name="mensagem"
+                            placeholder="Escreva sua mensagem..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <button type="submit" class="btn-enviar">
+
+                    <i class="fa-solid fa-paper-plane"></i>
+
+                    Enviar mensagem
+
+                </button>
+
+
+                <div class="seguranca">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    Seus dados estão seguros conosco.
+
+                </div>
+
+            </form>
+
         </div>
-
-
-        <div class="campo">
-
-            <label for="email">
-                E-mail
-            </label>
-
-            <div class="input-box">
-
-                <i class="fa-solid fa-envelope"></i>
-
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Digite seu e-mail"
-                    required
-                >
-
-            </div>
-
-        </div>
-
-
-        <div class="campo">
-
-            <label for="assunto">
-                Assunto
-            </label>
-
-            <div class="input-box">
-
-                <i class="fa-solid fa-tag"></i>
-
-                <input
-                    type="text"
-                    id="assunto"
-                    name="assunto"
-                    placeholder="Digite o assunto"
-                    required
-                >
-
-            </div>
-
-        </div>
-
-
-        <div class="campo">
-
-            <label for="mensagem">
-                Mensagem
-            </label>
-
-            <div class="textarea-box">
-
-                <i class="fa-solid fa-pen"></i>
-
-                <textarea
-                    id="mensagem"
-                    name="mensagem"
-                    placeholder="Escreva sua mensagem..."
-                    required
-                ></textarea>
-
-            </div>
-
-        </div>
-
-
-        <button type="submit" class="btn-enviar">
-
-            <i class="fa-solid fa-paper-plane"></i>
-
-            Enviar mensagem
-
-        </button>
-
-
-        <div class="seguranca">
-
-            <i class="fa-solid fa-lock"></i>
-
-            Seus dados estão seguros conosco.
-
-        </div>
-
-    </form>
-
-</div>
 
 
         <!-- OUTRAS FORMAS -->
@@ -240,9 +230,7 @@
             <div class="contato-item">
 
                 <div class="icone-contato">
-
                     <i class="fa-solid fa-envelope"></i>
-
                 </div>
 
                 <div class="info-contato">
@@ -267,9 +255,7 @@
             <div class="contato-item">
 
                 <div class="icone-contato">
-
                     <i class="fa-solid fa-phone"></i>
-
                 </div>
 
                 <div class="info-contato">
@@ -294,9 +280,7 @@
             <div class="contato-item">
 
                 <div class="icone-contato">
-
                     <i class="fa-solid fa-location-dot"></i>
-
                 </div>
 
                 <div class="info-contato">
@@ -316,27 +300,39 @@
             </div>
 
 
-            <!-- REDES SOCIAIS -->
+            <!-- CONTATO DIRETO -->
 
             <div class="redes">
 
                 <h3>Contato direto</h3>
 
                 <p>
-                    Se preferir, use os canais oficiais abaixo.
+                    Se preferir, use os canais abaixo.
                 </p>
 
                 <div class="redes-icons">
 
-                    <a href="mailto:tccaqua2026@gmail.com">
-                        <i class="fa-brands fa-instagram"></i>
+                    <a
+                        href="mailto:tccaqua2026@gmail.com"
+                        aria-label="Enviar e-mail"
+                        title="Enviar e-mail"
+                    >
+                        <i class="fa-solid fa-envelope"></i>
                     </a>
 
-                    <a href="tel:+5518996784876">
-                        <i class="fa-brands fa-facebook-f"></i>
+                    <a
+                        href="tel:+5518996784876"
+                        aria-label="Ligar para Aqua Track"
+                        title="Telefone"
+                    >
+                        <i class="fa-solid fa-phone"></i>
                     </a>
 
-                    <a href="mailto:tccaqua2026@gmail.com">
+                    <a
+                        href="index.html"
+                        aria-label="Ir para o site"
+                        title="Site"
+                    >
                         <i class="fa-solid fa-globe"></i>
                     </a>
 
@@ -354,9 +350,7 @@
     <section class="opiniao">
 
         <div class="gota-opiniao">
-
             <i class="fa-solid fa-droplet"></i>
-
         </div>
 
         <div>
@@ -378,144 +372,172 @@
     </section>
 
 
-   
+    <!-- ================= COPYRIGHT ================= -->
+
     <div class="copyright">
-
         © 2026 Aqua Track • Monitoramento Inteligente da Água
-
     </div>
 
-<button class="acessibilidade-btn" id="btnAcessibilidade"
+
+    <!-- ================= ACESSIBILIDADE ================= -->
+
+    <button
+        class="acessibilidade-btn"
+        id="btnAcessibilidade"
         aria-label="Abrir opções de acessibilidade"
-        title="Acessibilidade">
-    <i class="fa-solid fa-universal-access"></i>
-</button>
-
-<div class="painel-acessibilidade" id="painelAcessibilidade">
-
-    <div class="acessibilidade-header">
-        <div>
-            <i class="fa-solid fa-universal-access"></i>
-            <span>Acessibilidade</span>
-        </div>
-
-        <button id="fecharAcessibilidade" aria-label="Fechar acessibilidade">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-    </div>
-
-
-    <!-- LEITURA -->
-
-    <div class="acessibilidade-secao">
-
-        <h3>
-            <i class="fa-solid fa-volume-high"></i>
-            Leitura
-        </h3>
-
-        <div class="botoes-leitura">
-
-            <button id="lerPagina">
-                <i class="fa-solid fa-play"></i>
-                Ler página
-            </button>
-
-            <button id="pausarLeitura">
-                <i class="fa-solid fa-pause"></i>
-                Pausar
-            </button>
-
-            <button id="pararLeitura">
-                <i class="fa-solid fa-stop"></i>
-                Parar
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- TEXTO -->
-
-    <div class="acessibilidade-secao">
-
-        <h3>
-            <i class="fa-solid fa-text-height"></i>
-            Tamanho do texto
-        </h3>
-
-        <div class="tamanho-texto">
-
-            <button id="diminuirTexto" aria-label="Diminuir texto">
-                A−
-            </button>
-
-            <button id="textoNormal" aria-label="Texto normal">
-                A
-            </button>
-
-            <button id="aumentarTexto" aria-label="Aumentar texto">
-                A+
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- TEMA -->
-
-    <div class="acessibilidade-secao">
-
-        <h3>
-            <i class="fa-solid fa-palette"></i>
-            Tema
-        </h3>
-
-        <div class="temas">
-
-            <button id="temaClaro">
-                <i class="fa-solid fa-sun"></i>
-                Claro
-            </button>
-
-            <button id="temaEscuro">
-                <i class="fa-solid fa-moon"></i>
-                Escuro
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- RESTAURAR -->
-
-    <button class="restaurar-acessibilidade" id="restaurarAcessibilidade">
-
-        <i class="fa-solid fa-rotate-left"></i>
-
-        Restaurar padrão
-
+        title="Acessibilidade"
+    >
+        <i class="fa-solid fa-universal-access"></i>
     </button>
 
-</div>
 
-<script>
-document.getElementById("formContato")?.addEventListener("submit", function (event) {
-    event.preventDefault();
-    const nome = document.getElementById("nome").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const assunto = document.getElementById("assunto").value.trim();
-    const mensagem = document.getElementById("mensagem").value.trim();
-    const corpo = `Nome: ${nome}\nE-mail: ${email}\n\n${mensagem}`;
-    window.location.href = `mailto:tccaqua2026@gmail.com?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
-});
-</script>
+    <div class="painel-acessibilidade" id="painelAcessibilidade">
 
-<script src="acessibilidade.js"></script>
+        <div class="acessibilidade-header">
+
+            <div>
+                <i class="fa-solid fa-universal-access"></i>
+                <span>Acessibilidade</span>
+            </div>
+
+            <button
+                id="fecharAcessibilidade"
+                aria-label="Fechar acessibilidade"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <div class="acessibilidade-secao">
+
+            <h3>
+                <i class="fa-solid fa-volume-high"></i>
+                Leitura
+            </h3>
+
+            <div class="botoes-leitura">
+
+                <button id="lerPagina">
+                    <i class="fa-solid fa-play"></i>
+                    Ler página
+                </button>
+
+                <button id="pausarLeitura">
+                    <i class="fa-solid fa-pause"></i>
+                    Pausar
+                </button>
+
+                <button id="pararLeitura">
+                    <i class="fa-solid fa-stop"></i>
+                    Parar
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="acessibilidade-secao">
+
+            <h3>
+                <i class="fa-solid fa-text-height"></i>
+                Tamanho do texto
+            </h3>
+
+            <div class="tamanho-texto">
+
+                <button id="diminuirTexto" aria-label="Diminuir texto">
+                    A−
+                </button>
+
+                <button id="textoNormal" aria-label="Texto normal">
+                    A
+                </button>
+
+                <button id="aumentarTexto" aria-label="Aumentar texto">
+                    A+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="acessibilidade-secao">
+
+            <h3>
+                <i class="fa-solid fa-palette"></i>
+                Tema
+            </h3>
+
+            <div class="temas">
+
+                <button id="temaClaro">
+                    <i class="fa-solid fa-sun"></i>
+                    Claro
+                </button>
+
+                <button id="temaEscuro">
+                    <i class="fa-solid fa-moon"></i>
+                    Escuro
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="restaurar-acessibilidade"
+            id="restaurarAcessibilidade"
+        >
+            <i class="fa-solid fa-rotate-left"></i>
+            Restaurar padrão
+        </button>
+
+    </div>
+
+
+    <!-- ================= SCRIPTS ================= -->
+
+    <script>
+        document
+            .getElementById("formContato")
+            ?.addEventListener("submit", function (event) {
+
+                event.preventDefault();
+
+                const nome = document
+                    .getElementById("nome")
+                    .value
+                    .trim();
+
+                const email = document
+                    .getElementById("email")
+                    .value
+                    .trim();
+
+                const assunto = document
+                    .getElementById("assunto")
+                    .value
+                    .trim();
+
+                const mensagem = document
+                    .getElementById("mensagem")
+                    .value
+                    .trim();
+
+                const corpo =
+                    `Nome: ${nome}\nE-mail: ${email}\n\n${mensagem}`;
+
+                window.location.href =
+                    `mailto:tccaqua2026@gmail.com?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
+            });
+    </script>
+
+    <script src="acessibilidade.js"></script>
 
 </body>
-
 </html>
