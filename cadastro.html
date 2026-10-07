@@ -5,267 +5,255 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Aqua Track | Criar conta</title>
+    <title>Aqua Track | Criar Conta</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
-
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    >
-
+    <!-- CSS PRINCIPAL -->
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
-<body class="auth-page">
+<body class="auth-page cadastro-page">
 
-    <!-- ================= HEADER ================= -->
-
-    <header>
+    <!-- =========================
+         CABEÇALHO
+    ========================== -->
+    <header class="site-header">
 
         <div class="logo">
             <i class="fa-solid fa-droplet"></i>
-            <span>Aqua <b>Track</b></span>
+            <span>Aqua <strong>Track</strong></span>
         </div>
 
-        <nav>
-
-            <a href="index.html">
-                Início
-            </a>
-
-            <a href="sobre.html">
-                Sobre
-            </a>
-
-            <a href="contato.html">
-                Contato
-            </a>
+        <nav class="nav-links">
+            <a href="index.html">Início</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="contato.html">Contato</a>
 
             <a href="login.html" class="btn-primary">
-                Entrar
-                <i class="fa-solid fa-arrow-right"></i>
+                Entrar <i class="fa-solid fa-arrow-right"></i>
             </a>
-
         </nav>
 
     </header>
 
 
-    <!-- ================= CADASTRO ================= -->
+    <!-- =========================
+         ÁREA DE CADASTRO
+    ========================== -->
+    <main class="auth-content">
 
-    <main class="login-page cadastro-page">
+        <section class="login-card">
 
-        <div class="background-image"></div>
-        <div class="background-overlay"></div>
+            <!-- TÍTULO -->
+            <div class="login-header">
 
-        <div class="auth-content">
+                <h1>
+                    Criar <span>sua conta</span>
+                </h1>
 
-            <section class="login-card">
+                <div class="titulo-linha"></div>
 
-                <div class="login-header">
+                <p>
+                    Cadastre-se para acessar<br>
+                    todos os recursos do Aqua Track.
+                </p>
 
-                    <h2>
-                        Criar <span>sua conta</span>
-                    </h2>
+            </div>
 
-                    <div class="title-line"></div>
 
-                    <p>
-                        Cadastre-se para acessar<br>
-                        todos os recursos do Aqua Track.
-                    </p>
+            <!-- =========================
+                 MENSAGEM
+            ========================== -->
+            <div id="mensagem" class="erro-login" style="display: none;">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span id="mensagemTexto"></span>
+            </div>
+
+
+            <!-- =========================
+                 FORMULÁRIO
+            ========================== -->
+            <form id="cadastroForm" class="login-form">
+
+                <!-- NOME -->
+                <div class="campo">
+                    <label for="nome">
+                        Nome
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fa-solid fa-user input-icon"></i>
+
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            placeholder="Digite seu nome"
+                            autocomplete="name"
+                            required
+                        >
+
+                    </div>
+                </div>
+
+
+                <!-- E-MAIL -->
+                <div class="campo">
+                    <label for="email">
+                        E-mail
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fa-solid fa-envelope input-icon"></i>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Digite seu e-mail"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+                </div>
+
+
+                <!-- SENHA -->
+                <div class="campo">
+
+                    <label for="senha">
+                        Senha
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fa-solid fa-lock input-icon"></i>
+
+                        <input
+                            type="password"
+                            id="senha"
+                            name="senha"
+                            placeholder="Digite sua senha"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="show-password"
+                            onclick="mostrarSenha('senha', this)"
+                            aria-label="Mostrar senha"
+                        >
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+
+                    </div>
 
                 </div>
 
 
-                <!-- MENSAGEM DINÂMICA -->
+                <!-- CONFIRMAR SENHA -->
+                <div class="campo">
 
-                <div
-                    class="erro-login"
-                    id="mensagemBox"
-                    aria-live="polite"
+                    <label for="confirmarSenha">
+                        Confirmar senha
+                    </label>
+
+                    <div class="input-box">
+
+                        <i class="fa-solid fa-lock input-icon"></i>
+
+                        <input
+                            type="password"
+                            id="confirmarSenha"
+                            name="confirmarSenha"
+                            placeholder="Digite novamente sua senha"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="show-password"
+                            onclick="mostrarSenha('confirmarSenha', this)"
+                            aria-label="Mostrar senha"
+                        >
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BOTÃO -->
+                <button
+                    type="submit"
+                    id="btnCadastrar"
+                    class="login-button"
                 >
-                    <i
-                        class="fa-solid fa-circle-exclamation"
-                        id="iconeMensagem"
-                    ></i>
+                    <i class="fa-solid fa-check"></i>
+                    Criar conta
+                </button>
 
-                    <span id="textoMensagem"></span>
-                </div>
+            </form>
 
 
-                <!-- FORMULÁRIO -->
-
-                <form
-                    class="login-form"
-                    id="formCadastro"
-                >
-
-                    <div class="input-group">
-
-                        <label for="nome">
-                            Nome
-                        </label>
-
-                        <div class="input-box">
-
-                            <span class="input-icon">
-                                <i class="fa-solid fa-user"></i>
-                            </span>
-
-                            <input
-                                type="text"
-                                id="nome"
-                                name="nome"
-                                placeholder="Digite seu nome"
-                                required
-                            >
-
-                        </div>
-
-                    </div>
+            <!-- =========================
+                 VOLTAR PARA LOGIN
+            ========================== -->
+            <a href="login.html" class="register-button">
+                <i class="fa-solid fa-arrow-left"></i>
+                Já tenho uma conta
+            </a>
 
 
-                    <div class="input-group">
+            <!-- SEGURANÇA -->
+            <div class="security">
+                <i class="fa-solid fa-shield-halved"></i>
+                Seus dados estão protegidos com segurança.
+            </div>
 
-                        <label for="email">
-                            E-mail
-                        </label>
-
-                        <div class="input-box">
-
-                            <span class="input-icon">
-                                <i class="fa-solid fa-envelope"></i>
-                            </span>
-
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder="Digite seu e-mail"
-                                required
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="input-group">
-
-                        <label for="senha">
-                            Senha
-                        </label>
-
-                        <div class="input-box">
-
-                            <span class="input-icon">
-                                <i class="fa-solid fa-lock"></i>
-                            </span>
-
-                            <input
-                                type="password"
-                                id="senha"
-                                name="senha"
-                                placeholder="Crie uma senha (mínimo 6 caracteres)"
-                                required
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="input-group">
-
-                        <label for="confirmar_senha">
-                            Confirmar senha
-                        </label>
-
-                        <div class="input-box">
-
-                            <span class="input-icon">
-                                <i class="fa-solid fa-lock"></i>
-                            </span>
-
-                            <input
-                                type="password"
-                                id="confirmar_senha"
-                                name="confirmar_senha"
-                                placeholder="Digite a senha novamente"
-                                required
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    <button
-                        type="submit"
-                        class="login-button"
-                        id="btnCadastrar"
-                    >
-                        <span>✓</span>
-                        Criar conta
-                    </button>
-
-
-                    <a
-                        href="login.html"
-                        class="register-button"
-                    >
-                        <span>↩</span>
-                        Já tenho uma conta
-                    </a>
-
-                </form>
-
-
-                <div class="security">
-
-                    <span>
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </span>
-
-                    Seus dados estão protegidos com segurança.
-
-                </div>
-
-            </section>
-
-        </div>
-
-
-        <!-- ================= FOOTER ================= -->
-
-        <footer class="auth-footer">
-
-            <p>
-                © 2026 Aqua Track • Monitoramento Inteligente da Água
-            </p>
-
-        </footer>
+        </section>
 
     </main>
 
 
-    <!-- ================= FIREBASE ================= -->
+    <!-- =========================
+         RODAPÉ
+    ========================== -->
+    <footer class="auth-footer">
+        © 2026 Aqua Track • Monitoramento inteligente da água
+    </footer>
+
+
+    <!-- =========================
+         FIREBASE
+    ========================== -->
 
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 
     <script>
 
+        /* ==========================================================
+           CONFIGURAÇÃO DO FIREBASE
+        ========================================================== */
+
         const firebaseConfig = {
-            apiKey: "AIzaSyBDjJYlmWan7z_LEervJ_EhbZ2H78E6tog",
+            apiKey: "AIzaSyBDJjYlmWan7z_LEervJ_EhbZ2H78E6tog",
             authDomain: "monitoramento-ph-e-temperatura.firebaseapp.com",
             databaseURL: "https://monitoramento-ph-e-temperatura-default-rtdb.firebaseio.com",
             projectId: "monitoramento-ph-e-temperatura",
@@ -274,163 +262,392 @@
             appId: "1:178735590696:web:83d418e60905effcb2b41d"
         };
 
-        firebase.initializeApp(firebaseConfig);
+
+        /* ==========================================================
+           INICIALIZAÇÃO
+        ========================================================== */
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
 
         const auth = firebase.auth();
+        const db = firebase.database();
 
 
-        document
-            .getElementById("formCadastro")
-            .addEventListener("submit", function (e) {
+        /* ==========================================================
+           ELEMENTOS
+        ========================================================== */
 
-                e.preventDefault();
+        const formulario = document.getElementById("cadastroForm");
+        const btnCadastrar = document.getElementById("btnCadastrar");
 
-                const nome =
-                    document.getElementById("nome").value.trim();
-
-                const email =
-                    document.getElementById("email").value.trim();
-
-                const senha =
-                    document.getElementById("senha").value;
-
-                const confirmarSenha =
-                    document.getElementById("confirmar_senha").value;
-
-                const msgBox =
-                    document.getElementById("mensagemBox");
-
-                const iconeMsg =
-                    document.getElementById("iconeMensagem");
-
-                const txtMsg =
-                    document.getElementById("textoMensagem");
-
-                const btn =
-                    document.getElementById("btnCadastrar");
+        const msgBox = document.getElementById("mensagem");
+        const msgTexto = document.getElementById("mensagemTexto");
 
 
-                function exibirMsg(texto, tipoSucesso = false) {
+        /* ==========================================================
+           MOSTRAR MENSAGEM
+        ========================================================== */
 
-                    msgBox.className =
-                        tipoSucesso
-                            ? "mensagem-sucesso"
-                            : "erro-login";
+        function exibirMsg(texto, tipo = "erro") {
 
-                    iconeMsg.className =
-                        tipoSucesso
-                            ? "fa-solid fa-circle-check"
-                            : "fa-solid fa-circle-exclamation";
+            msgTexto.textContent = texto;
 
-                    txtMsg.textContent = texto;
+            msgBox.className =
+                tipo === "sucesso"
+                    ? "mensagem-sucesso"
+                    : "erro-login";
 
-                }
-
-
-                if (senha !== confirmarSenha) {
-
-                    exibirMsg(
-                        "As senhas não coincidem."
-                    );
-
-                    return;
-                }
+            /*
+             * IMPORTANTE:
+             * As classes começam escondidas no CSS.
+             * Aqui nós mostramos explicitamente a mensagem.
+             */
+            msgBox.style.display = "flex";
+        }
 
 
-                if (senha.length < 6) {
+        /* ==========================================================
+           ESCONDER MENSAGEM
+        ========================================================== */
 
-                    exibirMsg(
-                        "A senha precisa ter no mínimo 6 caracteres."
-                    );
+        function esconderMsg() {
 
-                    return;
-                }
+            msgBox.style.display = "none";
+            msgTexto.textContent = "";
 
-
-                btn.disabled = true;
-
-                btn.innerHTML =
-                    '<span>⏳</span> Criando conta...';
+        }
 
 
-                auth
-                    .createUserWithEmailAndPassword(
+        /* ==========================================================
+           MOSTRAR / ESCONDER SENHA
+        ========================================================== */
+
+        function mostrarSenha(id, botao) {
+
+            const campo = document.getElementById(id);
+
+            if (campo.type === "password") {
+
+                campo.type = "text";
+
+                botao.innerHTML =
+                    '<i class="fa-solid fa-eye-slash"></i>';
+
+            } else {
+
+                campo.type = "password";
+
+                botao.innerHTML =
+                    '<i class="fa-solid fa-eye"></i>';
+            }
+        }
+
+
+        /* ==========================================================
+           CADASTRO
+        ========================================================== */
+
+        formulario.addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+            esconderMsg();
+
+
+            /* -----------------------------------------
+               PEGAR VALORES
+            ----------------------------------------- */
+
+            const nome =
+                document.getElementById("nome").value.trim();
+
+            const email =
+                document.getElementById("email").value.trim();
+
+            const senha =
+                document.getElementById("senha").value;
+
+            const confirmarSenha =
+                document.getElementById("confirmarSenha").value;
+
+
+            /* -----------------------------------------
+               VALIDAÇÕES
+            ----------------------------------------- */
+
+            if (!nome) {
+
+                exibirMsg("Digite seu nome.");
+
+                return;
+            }
+
+
+            if (!email) {
+
+                exibirMsg("Digite seu e-mail.");
+
+                return;
+            }
+
+
+            if (senha.length < 6) {
+
+                exibirMsg(
+                    "A senha precisa ter pelo menos 6 caracteres."
+                );
+
+                return;
+            }
+
+
+            if (senha !== confirmarSenha) {
+
+                exibirMsg(
+                    "As senhas não são iguais."
+                );
+
+                return;
+            }
+
+
+            /* -----------------------------------------
+               BLOQUEAR BOTÃO
+            ----------------------------------------- */
+
+            btnCadastrar.disabled = true;
+
+            btnCadastrar.innerHTML =
+                '<i class="fa-solid fa-spinner fa-spin"></i> Criando conta...';
+
+
+            try {
+
+                console.log("[Aqua Track] Iniciando cadastro...");
+                console.log("[Aqua Track] E-mail:", email);
+
+
+                /* -----------------------------------------
+                   CRIAR USUÁRIO NO FIREBASE AUTHENTICATION
+                ----------------------------------------- */
+
+                const resultado =
+                    await auth.createUserWithEmailAndPassword(
                         email,
                         senha
-                    )
+                    );
 
-                    .then(userCredential => {
 
-                        return userCredential.user.updateProfile({
-                            displayName: nome
+                const usuario = resultado.user;
+
+
+                console.log(
+                    "[Aqua Track] Usuário criado:",
+                    usuario.uid
+                );
+
+
+                /* -----------------------------------------
+                   SALVAR NOME NO PERFIL DO FIREBASE
+                ----------------------------------------- */
+
+                await usuario.updateProfile({
+
+                    displayName: nome
+
+                });
+
+
+                /* -----------------------------------------
+                   SALVAR DADOS DO USUÁRIO NO REALTIME DATABASE
+                ----------------------------------------- */
+
+                try {
+
+                    await db
+                        .ref("usuarios/" + usuario.uid)
+                        .set({
+
+                            nome: nome,
+
+                            email: email,
+
+                            criadoEm:
+                                firebase.database.ServerValue.TIMESTAMP
+
                         });
 
-                    })
+                    console.log(
+                        "[Aqua Track] Usuário salvo no Realtime Database."
+                    );
 
-                    .then(() => {
+                } catch (erroDatabase) {
 
-                        exibirMsg(
-                            "Conta criada com sucesso! Redirecionando...",
-                            true
-                        );
+                    /*
+                     * O usuário já foi criado no Authentication.
+                     * Se o Database tiver regras que bloqueiem a gravação,
+                     * não apagamos a conta.
+                     */
 
-                        setTimeout(() => {
+                    console.error(
+                        "[Aqua Track] Erro ao salvar usuário no Database:",
+                        erroDatabase
+                    );
 
-                            window.location.href =
-                                "dashboard.html";
-
-                        }, 1000);
-
-                    })
-
-                    .catch(error => {
-
-                        btn.disabled = false;
-
-                        btn.innerHTML =
-                            '<span>✓</span> Criar conta';
+                }
 
 
-                        if (
-                            error.code ===
-                            "auth/email-already-in-use"
-                        ) {
+                /* -----------------------------------------
+                   SUCESSO
+                ----------------------------------------- */
 
-                            exibirMsg(
-                                "Este e-mail já está cadastrado."
-                            );
+                exibirMsg(
+                    "Conta criada com sucesso! Entrando...",
+                    "sucesso"
+                );
 
-                        } else if (
-                            error.code ===
-                            "auth/invalid-email"
-                        ) {
 
-                            exibirMsg(
-                                "Digite um e-mail válido."
-                            );
+                btnCadastrar.innerHTML =
+                    '<i class="fa-solid fa-check"></i> Conta criada!';
 
-                        } else if (
-                            error.code ===
-                            "auth/weak-password"
-                        ) {
 
-                            exibirMsg(
-                                "Senha muito fraca. Tente uma mais forte."
-                            );
+                /* -----------------------------------------
+                   IR PARA DASHBOARD
+                ----------------------------------------- */
 
-                        } else {
+                setTimeout(function() {
 
-                            exibirMsg(
-                                "Erro: " + error.message
-                            );
+                    window.location.href = "dashboard.html";
 
-                        }
+                }, 1200);
 
-                    });
 
-            });
+            } catch (error) {
+
+                console.error(
+                    "[Aqua Track] ERRO COMPLETO DO FIREBASE:",
+                    error
+                );
+
+                console.error(
+                    "[Aqua Track] Código do erro:",
+                    error.code
+                );
+
+                console.error(
+                    "[Aqua Track] Mensagem do erro:",
+                    error.message
+                );
+
+
+                let mensagem =
+                    "Não foi possível criar a conta.";
+
+
+                /* -----------------------------------------
+                   TRATAMENTO DOS ERROS
+                ----------------------------------------- */
+
+                switch (error.code) {
+
+                    case "auth/email-already-in-use":
+
+                        mensagem =
+                            "Este e-mail já está cadastrado. Tente fazer login.";
+
+                        break;
+
+
+                    case "auth/invalid-email":
+
+                        mensagem =
+                            "Digite um e-mail válido.";
+
+                        break;
+
+
+                    case "auth/weak-password":
+
+                        mensagem =
+                            "A senha precisa ter pelo menos 6 caracteres.";
+
+                        break;
+
+
+                    case "auth/operation-not-allowed":
+
+                        mensagem =
+                            "O cadastro por e-mail e senha está desativado no Firebase. Ative o provedor E-mail/Senha no Firebase Authentication.";
+
+                        break;
+
+
+                    case "auth/api-key-not-valid":
+
+                        mensagem =
+                            "A chave do Firebase não foi aceita. Verifique a configuração do projeto Firebase.";
+
+                        break;
+
+
+                    case "auth/network-request-failed":
+
+                        mensagem =
+                            "Não foi possível conectar ao Firebase. Verifique sua internet.";
+
+                        break;
+
+
+                    case "auth/too-many-requests":
+
+                        mensagem =
+                            "Muitas tentativas foram feitas. Aguarde um pouco e tente novamente.";
+
+                        break;
+
+
+                    case "auth/unauthorized-domain":
+
+                        mensagem =
+                            "Este domínio não está autorizado no Firebase Authentication.";
+
+                        break;
+
+
+                    default:
+
+                        mensagem =
+                            "Erro do Firebase: " +
+                            (error.code || "erro desconhecido");
+
+                        break;
+                }
+
+
+                /* -----------------------------------------
+                   MOSTRAR ERRO
+                ----------------------------------------- */
+
+                exibirMsg(mensagem);
+
+
+                /* -----------------------------------------
+                   LIBERAR BOTÃO
+                ----------------------------------------- */
+
+                btnCadastrar.disabled = false;
+
+                btnCadastrar.innerHTML =
+                    '<i class="fa-solid fa-check"></i> Criar conta';
+
+            }
+
+        });
 
     </script>
 
 </body>
+
 </html>
