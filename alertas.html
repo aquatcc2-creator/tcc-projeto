@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aqua Track | Central de Alertas</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <i class="fa-solid fa-droplet" style="color: #00bfff; font-size: 32px;"></i>
+            <div>
+                <strong>Aqua <span>Track</span></strong>
+                <small>MONITORAMENTO DA ÁGUA</small>
+            </div>
+        </div>
+
+        <nav class="menu">
+            <a class="menu-item" href="dashboard.html">
+                <span>⌂</span> Medição Atual
+            </a>
+
+            <a class="menu-item" href="historico.html">
+                <span>▥</span> Histórico de Medições
+            </a>
+
+            <a class="menu-item" href="tratamento_ph.html">
+                <span>🧪</span> Controle de pH
+            </a>
+
+            <a class="menu-item" href="tratamento_temperatura.html">
+                <span>🌡</span> Controle de Temperatura
+            </a>
+
+            <a class="menu-item" href="dashboard.html#secao-relatorios">
+                <span>📄</span> Relatórios (PDF)
+            </a>
+
+            <a class="menu-item active" href="alertas.html">
+                <span>⚠️</span> Central de Alertas
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="wave"></div>
+            <p>Cuidar da água<br>é cuidar do futuro.</p>
+            <div>〰〰</div>
+        </div>
+    </aside>
+
+    <main class="main">
+        <header class="topbar">
+            <div>
+                <h1>CENTRAL DE ALERTAS E NOTIFICAÇÕES</h1>
+                <p>Acompanhamento de eventos críticos e parâmetros fora do esperado.</p>
+            </div>
+
+            <div class="user-area">
+                <div class="avatar">👤</div>
+                <span id="topoNomeUsuario">Olá, Usuário!</span>
+                <button id="btnSair" title="Sair da conta" style="background: none; border: 1px solid var(--border); color: #ff7a72; border-radius: 8px; padding: 4px 10px; cursor: pointer; font-size: 11px; margin-left: 8px;">
+                    Sair
+                </button>
+            </div>
+        </header>
+
+        <section class="content">
+
+            <!-- STATUS DOS ALERTAS ATIVOS -->
+            <div id="containerAlertasAtivos">
+                <div style="background: rgba(3, 33, 61, 0.85); border: 1px solid var(--border); border-radius: 16px; padding: 25px; margin-bottom: 25px;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div class="check-big" id="statusGeralIcone" style="margin-bottom: 0;">✓</div>
+                        <div>
+                            <h2 style="font-size: 20px; color: #fff;" id="statusGeralTitulo">Monitorando Parâmetros...</h2>
+                            <p style="color: #8db8d1; font-size: 13px;" id="statusGeralDescricao">Aguardando dados em tempo real do Firebase.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABELA DE LIMITES E AÇÕES IMEDIATAS -->
+            <div style="background: rgba(3, 33, 61, 0.7); border: 1px solid var(--border); border-radius: 16px; padding: 25px; margin-top: 25px;">
+                <h3 style="color: #55d6ff; font-size: 16px; margin-bottom: 15px;">
+                    <i class="fa-solid fa-bell"></i> Matriz de Ação por Severidade
+                </h3>
+
+                <table class="tabela-ph-exemplos">
+                    <thead>
+                        <tr>
+                            <th>Parâmetro</th>
+                            <th>Faixa Normal</th>
+                            <th>Faixa de Alerta</th>
+                            <th>Risco Associado</th>
+                            <th>Ação Imediata</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>pH Ácido</strong></td>
+                            <td class="neutro">7,0 a 7,4</td>
+                            <td class="acido">&lt; 7,0</td>
+                            <td>Corrosão de motores, queimação nos olhos</td>
+                            <td><a href="tratamento_ph.html" style="color: #55d6ff; text-decoration: underline;">Adicionar Barrilha Leve</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>pH Alcalino</strong></td>
+                            <td class="neutro">7,0 a 7,4</td>
+                            <td class="alcalino">&gt; 7,4</td>
+                            <td>Água turva, cloro ineficiente, algas</td>
+                            <td><a href="tratamento_ph.html" style="color: #55d6ff; text-decoration: underline;">Adicionar Redutor de pH</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Temperatura Baixa</strong></td>
+                            <td class="neutro">24 a 28 °C</td>
+                            <td class="acido">&lt; 24 °C</td>
+                            <td>Desconforto térmico, reação lenta de químicos</td>
+                            <td><a href="tratamento_temperatura.html" style="color: #55d6ff; text-decoration: underline;">Acionar Aquecimento</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Temperatura Alta</strong></td>
+                            <td class="neutro">24 a 28 °C</td>
+                            <td class="alcalino">&gt; 28 °C</td>
+                            <td>Evaporação rápida do cloro, bactérias</td>
+                            <td><a href="tratamento_temperatura.html" style="color: #55d6ff; text-decoration: underline;">Aumentar Cloração</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+    </main>
+</div>
+
+<!-- FIREBASE SDK & CONTROLES -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/firebase.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+verificarAutenticacao(true);
+
+if (db) {
+    db.ref('/medicoes/atual').on('value', snap => {
+        const dado = snap.val();
+        if (!dado) return;
+        const ph = parseFloat(dado.ph);
+        const temp = parseFloat(dado.temperatura);
+        if (isNaN(ph) || isNaN(temp)) return;
+
+        const sPH = statusPH(ph);
+        const sTemp = statusTemp(temp);
+
+        const icone = document.getElementById("statusGeralIcone");
+        const titulo = document.getElementById("statusGeralTitulo");
+        const desc = document.getElementById("statusGeralDescricao");
+
+        if (sPH.ideal && sTemp.ideal) {
+            icone.textContent = "✓";
+            icone.style.background = "#34dc9c";
+            icone.style.color = "#00392b";
+            titulo.textContent = "Tudo Certo! Parâmetros 100% Ideais";
+            desc.textContent = `pH medido: ${ph.toFixed(1).replace('.', ',')} | Temperatura: ${temp.toFixed(1).replace('.', ',')} °C. Nenhuma ação corretiva necessária.`;
+        } else {
+            icone.textContent = "⚠️";
+            icone.style.background = "#ef4444";
+            icone.style.color = "#ffffff";
+            titulo.textContent = "Atenção: Parâmetros Fora do Recomendado!";
+            let alertasTxt = [];
+            if (!sPH.ideal) alertasTxt.push(`pH em ${ph.toFixed(1).replace('.', ',')} (${sPH.texto})`);
+            if (!sTemp.ideal) alertasTxt.push(`Temperatura em ${temp.toFixed(1).replace('.', ',')} °C (${sTemp.texto})`);
+            desc.innerHTML = `${alertasTxt.join(" e ")}. <a href="tratamento_ph.html" style="color: #fff; text-decoration: underline; font-weight: bold;">Consulte as instruções de tratamento aqui</a>.`;
+        }
+    });
+}
+</script>
+
+</body>
+</html>

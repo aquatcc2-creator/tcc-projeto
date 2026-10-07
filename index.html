@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aqua Track | Monitoramento Inteligente de pH e Temperatura</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-droplet"></i>
+            <span>Aqua <b>Track</b></span>
+        </div>
+
+        <nav>
+            <a href="index.html" class="ativo">Início</a>
+            <a href="#secao-ph">O que é pH?</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="contato.html">Contato</a>
+            <a href="login.html" class="btn-primar">
+                Entrar
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </nav>
+    </header>
+
+    <!-- ================= HERO SECTION ================= -->
+    <section class="hero" style="min-height: 85vh; display: flex; align-items: center; position: relative; padding: 60px 6%; background: radial-gradient(circle at 75% 30%, rgba(8, 125, 201, 0.25), transparent 60%), linear-gradient(135deg, #011326 0%, #03264a 55%, #011326 100%); color: #fff;">
+        <div class="content" style="max-width: 900px; z-index: 2;">
+            <div class="left">
+                <h1 style="font-size: 46px; font-weight: 800; line-height: 1.15; margin-bottom: 20px;">
+                    Monitoramento inteligente da
+                    <span style="color: #00cfff;">qualidade</span> da água.
+                </h1>
+
+                <h2 style="font-size: 18px; font-weight: 400; color: #a4cfe6; line-height: 1.6; margin-bottom: 30px;">
+                    Acompanhe o <strong>pH</strong> e a <strong>temperatura</strong> em tempo real com precisão, praticidade e tecnologia IoT (ESP32). Parâmetros ideais para saúde, segurança e sustentabilidade.
+                </h2>
+
+                <div class="hero-buttons" style="display: flex; gap: 15px; margin-bottom: 45px; flex-wrap: wrap;">
+                    <a href="login.html" class="btn-primary" style="padding: 14px 28px; background: linear-gradient(90deg, #087dc9, #19bdf2); color: #fff; border-radius: 14px; font-weight: 700; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 8px 25px rgba(25, 189, 242, 0.35);">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        Entrar na Plataforma
+                    </a>
+
+                    <a href="#secao-ph" class="btn-secondary" style="padding: 14px 28px; background: rgba(25, 189, 242, 0.1); border: 1px solid rgba(25, 189, 242, 0.4); color: #55d6ff; border-radius: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 10px;">
+                        <i class="fa-solid fa-flask"></i>
+                        Entenda o pH
+                    </a>
+                </div>
+
+                <div class="hero-features" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px;">
+                    <div class="feature" style="display: flex; align-items: center; gap: 12px; background: rgba(3, 33, 61, 0.6); padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(44, 174, 239, 0.25);">
+                        <i class="fa-solid fa-droplet" style="color: #00cfff; font-size: 22px;"></i>
+                        <div class="feature-text">
+                            <span style="font-weight: 700; font-size: 13px; display: block;">Monitoramento</span>
+                            <small style="color: #8db8d1; font-size: 11px;">em tempo real (IoT)</small>
+                        </div>
+                    </div>
+
+                    <div class="feature" style="display: flex; align-items: center; gap: 12px; background: rgba(3, 33, 61, 0.6); padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(44, 174, 239, 0.25);">
+                        <i class="fa-solid fa-triangle-exclamation" style="color: #ff5b5b; font-size: 22px;"></i>
+                        <div class="feature-text">
+                            <span style="font-weight: 700; font-size: 13px; display: block;">Alertas no Topo</span>
+                            <small style="color: #8db8d1; font-size: 11px;">fora dos parâmetros</small>
+                        </div>
+                    </div>
+
+                    <div class="feature" style="display: flex; align-items: center; gap: 12px; background: rgba(3, 33, 61, 0.6); padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(44, 174, 239, 0.25);">
+                        <i class="fa-solid fa-file-pdf" style="color: #35df9b; font-size: 22px;"></i>
+                        <div class="feature-text">
+                            <span style="font-weight: 700; font-size: 13px; display: block;">Relatório em PDF</span>
+                            <small style="color: #8db8d1; font-size: 11px;">histórico de variações</small>
+                        </div>
+                    </div>
+
+                    <div class="feature" style="display: flex; align-items: center; gap: 12px; background: rgba(3, 33, 61, 0.6); padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(44, 174, 239, 0.25);">
+                        <i class="fa-solid fa-leaf" style="color: #35df9b; font-size: 22px;"></i>
+                        <div class="feature-text">
+                            <span style="font-weight: 700; font-size: 13px; display: block;">Guia de Correção</span>
+                            <small style="color: #8db8d1; font-size: 11px;">passo a passo químico</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SEÇÃO COMPLETA: O QUE É NÍVEL DE pH ================= -->
+    <section class="secao-ph-completa" id="secao-ph">
+        <div class="ph-titulo-secao">
+            <span class="sub">Guia Fundamental de Química da Água</span>
+            <h2>O que é o Nível de pH e por que mapeá-lo?</h2>
+            <p>
+                O <strong>pH (Potencial Hidrogeniônico)</strong> é uma escala logarítmica que mede a concentração de íons de hidrogênio (H⁺) presentes em uma solução aquosa, determinando se a água está <strong>ácida</strong>, <strong>neutra</strong> ou <strong>básica (alcalina)</strong>.
+            </p>
+        </div>
+
+        <!-- ESCALA VISUAL -->
+        <div class="ph-escala-visual">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <span style="font-size: 13px; font-weight: 700; color: #ff7a72;">← ÁCIDO (0 a 6,9)</span>
+                <span style="font-size: 13px; font-weight: 700; color: #35df9b;">NEUTRO (7,0)</span>
+                <span style="font-size: 13px; font-weight: 700; color: #55d6ff;">ALCALINO / BÁSICO (7,1 a 14) →</span>
+            </div>
+
+            <div class="ph-escala-barra"></div>
+
+            <div class="ph-escala-valores">
+                <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+                <span style="color: #35df9b; font-size: 15px;">7</span>
+                <span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span>
+            </div>
+
+            <div class="ph-destaque-ideal">
+                <div>
+                    <strong>Faixa Recomendada para Água de Uso Humano / Piscinas: 7,0 a 7,4</strong>
+                    <p style="font-size: 12px; margin-top: 4px; color: #b7e8d5;">Neste intervalo, o cloro tem 80% de eficiência germicida, não ocorre corrosão de tubulações e não há irritação nos olhos e pele.</p>
+                </div>
+                <span style="font-size: 28px;">💧</span>
+            </div>
+        </div>
+
+        <!-- CARDS DE CONCEITOS E TABELA DE EXEMPLOS -->
+        <div class="ph-cards-grid">
+            <div class="ph-card-info">
+                <div class="ph-card-icone">🧪</div>
+                <h3>1. A Escala Logarítmica</h3>
+                <p>
+                    A escala varia de <strong>0 a 14</strong>. Sendo logarítmica, cada unidade representa uma mudança de <strong>10 vezes</strong> na acidez. Por exemplo, uma água com pH 6 é 10 vezes mais ácida que uma com pH 7, e uma água com pH 5 é 100 vezes mais ácida! Pequenas variações exigem atenção imediata.
+                </p>
+            </div>
+
+            <div class="ph-card-info">
+                <div class="ph-card-icone">⚖️</div>
+                <h3>2. A Importância do Mapeamento Contínuo</h3>
+                <p>
+                    O pH não é estático: chuva, banhistas, folhas, temperatura e radiação solar alteram a água ao longo do dia. O mapeamento em tempo real com ESP32 evita que a água atinja estados críticos antes que alguém perceba, gerando economia com produtos químicos e protegendo a saúde.
+                </p>
+            </div>
+
+            <div class="ph-card-info">
+                <div class="ph-card-icone">🔬</div>
+                <h3>3. Impacto na Ação Sanitizante</h3>
+                <p>
+                    Quando o pH sobe acima de 7.8, o cloro livre perde até 70% do seu poder de desinfecção, facilitando a proliferação de fungos, algas e bactérias. Quando cai abaixo de 7.0, a água torna-se corrosiva para bombas, aquecedores e rejuntes.
+                </p>
+            </div>
+        </div>
+
+        <!-- TABELA COMPARATIVA DA VIDA REAL -->
+        <div style="background: rgba(3, 33, 61, 0.7); border: 1px solid rgba(44, 174, 239, 0.3); border-radius: 18px; padding: 25px;">
+            <h3 style="font-size: 18px; color: #55d6ff; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-list-check"></i> Exemplos Práticos de pH no Dia a Dia
+            </h3>
+            <table class="tabela-ph-exemplos">
+                <thead>
+                    <tr>
+                        <th>Substância / Solução</th>
+                        <th>Faixa de pH</th>
+                        <th>Classificação</th>
+                        <th>Impacto Prático</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Suco de Limão / Ácido Gástrico</td>
+                        <td>2,0 – 2,4</td>
+                        <td class="acido">Fortemente Ácido</td>
+                        <td>Altamente corrosivo para metais e tecidos</td>
+                    </tr>
+                    <tr>
+                        <td>Chuva Ácida / Refrigerantes</td>
+                        <td>4,0 – 4,5</td>
+                        <td class="acido">Ácido</td>
+                        <td>Danifica ecossistemas aquáticos e estruturas</td>
+                    </tr>
+                    <tr>
+                        <td>Café / Leite</td>
+                        <td>5,0 – 6,5</td>
+                        <td class="acido">Levemente Ácido</td>
+                        <td>Comum no consumo biológico</td>
+                    </tr>
+                    <tr style="background: rgba(53, 223, 155, 0.1);">
+                        <td><strong>Água Pura / Água Aqua Track</strong></td>
+                        <td><strong>7,0 – 7,4</strong></td>
+                        <td class="neutro">Equilíbrio Perfeito</td>
+                        <td><strong>Parâmetro ideal para consumo, piscinas e pele humana</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Sangue Humano</td>
+                        <td>7,35 – 7,45</td>
+                        <td class="alcalino">Levemente Básico</td>
+                        <td>Homeostase biológica vital</td>
+                    </tr>
+                    <tr>
+                        <td>Água do Mar</td>
+                        <td>8,0 – 8,4</td>
+                        <td class="alcalino">Moderadamente Alcalino</td>
+                        <td>Salinidade e carbonatos naturais</td>
+                    </tr>
+                    <tr>
+                        <td>Bicarbonato de Sódio / Sabonete</td>
+                        <td>9,0 – 10,0</td>
+                        <td class="alcalino">Alcalino</td>
+                        <td>Agente neutralizante de acidez</td>
+                    </tr>
+                    <tr>
+                        <td>Água Sanitária / Soda Cáustica</td>
+                        <td>12,0 – 14,0</td>
+                        <td class="alcalino">Fortemente Alcalino</td>
+                        <td>Poder cáustico e desincrustante severo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer style="background: #011123; border-top: 1px solid rgba(44, 174, 239, 0.25); padding: 30px 6%; text-align: center; color: #7fa9c4; font-size: 13px;">
+        <p>© 2026 Aqua Track • Monitoramento Inteligente da Água com IoT e Firebase</p>
+    </footer>
+
+    <!-- Acessibilidade -->
+    <script src="acessibilidade.js"></script>
+</body>
+</html>

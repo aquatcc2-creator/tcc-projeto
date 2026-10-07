@@ -1,0 +1,9 @@
+{
+  "rules": {
+    "medicoes": {
+      ".read": true,
+      ".write": true
+    }
+  }
+}
+

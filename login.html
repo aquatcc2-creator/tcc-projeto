@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aqua Track | Login</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <i class="fa-solid fa-droplet"></i>
+        <span>Aqua <b>Track</b></span>
+    </div>
+
+    <nav>
+        <a href="index.html">Início</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="contato.html">Contato</a>
+        <a href="login.html" class="btn-primar">
+            Entrar
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </nav>
+</header>
+
+<main class="login-page">
+    <div class="background-image"></div>
+    <div class="background-overlay"></div>
+
+    <div class="content">
+        <section class="login-card">
+            <div class="login-header">
+                <h2>
+                    Bem-vindo <span>de volta!</span>
+                </h2>
+                <div class="title-line"></div>
+                <p>
+                    Faça login para acessar sua conta<br>
+                    e acompanhar a qualidade da água.
+                </p>
+            </div>
+
+            <!-- MENSAGEM DE ERRO/SUCESSO DINÂMICA -->
+            <div class="erro-login" id="mensagemErro" style="display: none;">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span id="textoErro"></span>
+            </div>
+
+            <form class="login-form" id="formLogin">
+                <div class="input-group">
+                    <label for="email">E-mail</label>
+                    <div class="input-box">
+                        <span class="input-icon">✉</span>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Digite seu e-mail"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="senha">Senha</label>
+                    <div class="input-box">
+                        <span class="input-icon">🔒</span>
+                        <input
+                            type="password"
+                            id="senha"
+                            name="senha"
+                            placeholder="Digite sua senha"
+                            required
+                        >
+                        <button
+                            type="button"
+                            class="show-password"
+                            onclick="mostrarSenha()"
+                        >
+                            ◉
+                        </button>
+                    </div>
+                </div>
+
+                <a href="login.html" class="forgot-password" id="linkEsqueciSenha">
+                    Esqueceu sua senha?
+                </a>
+
+                <button
+                    type="submit"
+                    class="login-button"
+                    id="btnLogin"
+                >
+                    <span>↪</span>
+                    Entrar
+                </button>
+
+                <div class="divider">
+                    <span></span>
+                    <p>ou</p>
+                    <span></span>
+                </div>
+
+                <a href="cadastro.html" class="register-button">
+                    <span>♙+</span>
+                    Criar uma conta
+                </a>
+            </form>
+
+            <div class="security">
+                <span>🛡</span>
+                Seus dados estão protegidos com segurança.
+            </div>
+        </section>
+    </div>
+
+    <!-- ================= ACESSIBILIDADE ================= -->
+    <button class="acessibilidade-btn" id="btnAcessibilidade"
+            aria-label="Abrir opções de acessibilidade"
+            title="Acessibilidade">
+        <i class="fa-solid fa-universal-access"></i>
+    </button>
+
+    <div class="painel-acessibilidade" id="painelAcessibilidade">
+        <div class="acessibilidade-header">
+            <div>
+                <i class="fa-solid fa-universal-access"></i>
+                <span>Acessibilidade</span>
+            </div>
+            <button id="fecharAcessibilidade" aria-label="Fechar acessibilidade">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="acessibilidade-secao">
+            <h3><i class="fa-solid fa-volume-high"></i> Leitura</h3>
+            <div class="botoes-leitura">
+                <button id="lerPagina"><i class="fa-solid fa-play"></i> Ler página</button>
+                <button id="pausarLeitura"><i class="fa-solid fa-pause"></i> Pausar</button>
+                <button id="pararLeitura"><i class="fa-solid fa-stop"></i> Parar</button>
+            </div>
+        </div>
+
+        <div class="acessibilidade-secao">
+            <h3><i class="fa-solid fa-text-height"></i> Tamanho do texto</h3>
+            <div class="tamanho-texto">
+                <button id="diminuirTexto" aria-label="Diminuir texto">A−</button>
+                <button id="textoNormal" aria-label="Texto normal">A</button>
+                <button id="aumentarTexto" aria-label="Aumentar texto">A+</button>
+            </div>
+        </div>
+
+        <div class="acessibilidade-secao">
+            <h3><i class="fa-solid fa-palette"></i> Tema</h3>
+            <div class="temas">
+                <button id="temaClaro"><i class="fa-solid fa-sun"></i> Claro</button>
+                <button id="temaEscuro"><i class="fa-solid fa-moon"></i> Escuro</button>
+            </div>
+        </div>
+
+        <button class="restaurar-acessibilidade" id="restaurarAcessibilidade">
+            <i class="fa-solid fa-rotate-left"></i>
+            Restaurar padrão
+        </button>
+    </div>
+
+    <footer>
+        <p>© 2026 Aqua Track • Monitoramento Inteligente da Água</p>
+    </footer>
+
+    <script src="acessibilidade.js"></script>
+</main>
+
+<!-- FIREBASE SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+    apiKey:            "AIzaSyBDJjYlmWan7z_LEervJ_EhbZ2H78E6tog",
+    authDomain:        "monitoramento-ph-e-temperatura.firebaseapp.com",
+    databaseURL:       "https://monitoramento-ph-e-temperatura-default-rtdb.firebaseio.com",
+    projectId:         "monitoramento-ph-e-temperatura",
+    storageBucket:     "monitoramento-ph-e-temperatura.firebasestorage.app",
+    messagingSenderId: "178735590696",
+    appId:             "1:178735590696:web:83d418e60905effcb2b41d"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+// Se o usuário já estiver logado, redireciona direto pro dashboard
+auth.onAuthStateChanged(user => {
+    if (user) {
+        window.location.href = "dashboard.html";
+    }
+});
+
+function mostrarSenha() {
+    const senha = document.getElementById("senha");
+    senha.type = (senha.type === "password") ? "text" : "password";
+}
+
+// Formulário de login
+document.getElementById("formLogin").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("senha").value;
+    const msgBox = document.getElementById("mensagemErro");
+    const txtErro = document.getElementById("textoErro");
+    const btn = document.getElementById("btnLogin");
+
+    msgBox.style.display = "none";
+    btn.disabled = true;
+    btn.innerHTML = '<span>⏳</span> Entrando...';
+
+    auth.signInWithEmailAndPassword(email, senha)
+        .then(() => {
+            window.location.href = "dashboard.html";
+        })
+        .catch(error => {
+            btn.disabled = false;
+            btn.innerHTML = '<span>↪</span> Entrar';
+            msgBox.style.display = "flex";
+
+            if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password" || error.code === "auth/invalid-credential") {
+                txtErro.textContent = "E-mail ou senha incorretos.";
+            } else if (error.code === "auth/invalid-email") {
+                txtErro.textContent = "Formato de e-mail inválido.";
+            } else if (error.code === "auth/too-many-requests") {
+                txtErro.textContent = "Muitas tentativas. Aguarde um momento.";
+            } else {
+                txtErro.textContent = "Erro ao fazer login: " + error.message;
+            }
+        });
+});
+
+// Recuperação de senha
+document.getElementById("linkEsqueciSenha").addEventListener("click", function(e) {
+    e.preventDefault();
+    const email = document.getElementById("email").value.trim();
+    if (!email) {
+        alert("Digite seu e-mail no campo acima para receber as instruções de recuperação.");
+        return;
+    }
+    auth.sendPasswordResetEmail(email)
+        .then(() => {
+            alert("E-mail de redefinição de senha enviado para: " + email);
+        })
+        .catch(err => {
+            alert("Erro ao enviar e-mail: " + err.message);
+        });
+});
+</script>
+
+</body>
+</html>
+

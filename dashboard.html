@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aqua Track | Dashboard de Medição</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- BIBLIOTECA PARA GERAÇÃO DE PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+<div class="app">
+
+    <!-- ================= SIDEBAR LATERAL ================= -->
+    <aside class="sidebar">
+        <div class="brand">
+            <i class="fa-solid fa-droplet" style="color: #00bfff; font-size: 32px;"></i>
+            <div>
+                <strong>Aqua <span>Track</span></strong>
+                <small>MONITORAMENTO DA ÁGUA</small>
+            </div>
+        </div>
+
+        <nav class="menu">
+            <a class="menu-item active" href="dashboard.html">
+                <span>⌂</span> Medição Atual
+            </a>
+
+            <a class="menu-item" href="historico.html">
+                <span>▥</span> Histórico de Medições
+            </a>
+
+            <a class="menu-item" href="tratamento_ph.html">
+                <span>🧪</span> Controle de pH
+            </a>
+
+            <a class="menu-item" href="tratamento_temperatura.html">
+                <span>🌡</span> Controle de Temperatura
+            </a>
+
+            <a class="menu-item" href="#secao-relatorios">
+                <span>📄</span> Relatórios (PDF)
+            </a>
+
+            <a class="menu-item" href="alertas.html">
+                <span>⚠️</span> Central de Alertas
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="wave"></div>
+            <p>Cuidar da água<br>é cuidar do futuro.</p>
+            <div>〰〰</div>
+        </div>
+    </aside>
+
+    <!-- ================= ÁREA PRINCIPAL ================= -->
+    <main class="main">
+        <header class="topbar">
+            <div>
+                <h1>MONITORAMENTO INTELIGENTE DA ÁGUA</h1>
+                <p>Mais qualidade, mais segurança, sempre.</p>
+            </div>
+
+            <div class="user-area">
+                <button class="notification" onclick="window.location.href='alertas.html'" title="Ver Alertas">
+                    ⚠️ <i id="indicadorAlertaTopbar" style="display: none;"></i>
+                </button>
+                <div class="avatar">👤</div>
+                <span id="topoNomeUsuario">Olá, Usuário!</span>
+                <button id="btnSair" title="Sair da conta" style="background: none; border: 1px solid var(--border); color: #ff7a72; border-radius: 8px; padding: 5px 12px; cursor: pointer; font-size: 11px; margin-left: 8px;">
+                    Sair
+                </button>
+            </div>
+        </header>
+
+        <section class="content">
+
+            <!-- BOAS-VINDAS & DATA -->
+            <div class="welcome-row">
+                <div>
+                    <div class="welcome-icon">≋</div>
+                    <div>
+                        <h2><span id="saudacaoNomeUsuario">Olá, Usuário!</span> 👋</h2>
+                        <p>Acompanhe a qualidade da sua água e mantenha tudo dentro dos parâmetros ideais.</p>
+                    </div>
+                </div>
+
+                <div class="date-card">
+                    <span>▣</span>
+                    <div>
+                        <small id="fb-data-ultima">--/--/----</small>
+                        <strong id="fb-hora-ultima">--:--</strong>
+                    </div>
+                    <span>☁</span>
+                </div>
+            </div>
+
+            <!-- CARDS DE MÉTRICAS PRINCIPAIS -->
+            <div class="cards-grid">
+
+                <!-- pH -->
+                <article class="metric-card">
+                    <div class="metric-icon">💧</div>
+                    <div class="metric-info">
+                        <h3>pH da água</h3>
+                        <strong id="fb-ph-valor">--</strong>
+                        <span class="badge" id="fb-ph-badge">● Aguardando...</span>
+                        <small>Faixa recomendada: 7,0 – 7,4</small>
+                    </div>
+                </article>
+
+                <!-- TEMPERATURA -->
+                <article class="metric-card">
+                    <div class="metric-icon">🌡</div>
+                    <div class="metric-info">
+                        <h3>Temperatura</h3>
+                        <strong id="fb-temp-valor">-- °C</strong>
+                        <span class="badge" id="fb-temp-badge">● Aguardando...</span>
+                        <small>Faixa recomendada: 24 – 28 °C</small>
+                    </div>
+                </article>
+
+                <!-- SENSOR ONLINE -->
+                <article class="metric-card sensor-card">
+                    <div class="metric-icon">⌁</div>
+                    <div class="metric-info">
+                        <h3>Sensor IoT (ESP32)</h3>
+                        <strong class="disconnected" id="fb-sensor-status">● Desconectado</strong>
+                        <small>Aqua Track Sensor</small>
+                        <span class="bluetooth">ᛒ</span>
+                    </div>
+                </article>
+
+                <!-- TOTAL DE MEDIÇÕES -->
+                <article class="metric-card">
+                    <div class="metric-icon">▤</div>
+                    <div class="metric-info">
+                        <h3>Total de medições</h3>
+                        <strong id="fb-total-medicoes">--</strong>
+                        <small>Última: <span id="fb-ultima-info">-- • --</span></small>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- PAINEL CENTRAL: GRÁFICO E ÚLTIMA MEDIÇÃO -->
+            <div class="middle-grid">
+
+                <!-- GRÁFICO DE EVOLUÇÃO -->
+                <article class="panel chart-panel">
+                    <div class="panel-header">
+                        <div>
+                            <h2>Evolução das medições</h2>
+                            <div class="legend">
+                                <span><i class="dot ph-dot"></i> pH</span>
+                                <span><i class="dot temp-dot"></i> Temperatura (°C)</span>
+                            </div>
+                        </div>
+
+                        <div class="periods">
+                            <button class="selected">Últimas Leituras</button>
+                            <a href="historico.html" style="color: #55d6ff; font-size: 11px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 12px;">Ver Completo →</a>
+                        </div>
+                    </div>
+
+                    <div class="chart">
+                        <div class="y-labels">
+                            <span>8,0</span>
+                            <span>7,5</span>
+                            <span>7,0</span>
+                            <span>6,5</span>
+                            <span>6,0</span>
+                        </div>
+
+                        <svg viewBox="0 0 700 250" preserveAspectRatio="none" aria-label="Gráfico de evolução">
+                            <line x1="30" y1="20" x2="680" y2="20" class="gridline"/>
+                            <line x1="30" y1="70" x2="680" y2="70" class="gridline"/>
+                            <line x1="30" y1="120" x2="680" y2="120" class="gridline"/>
+                            <line x1="30" y1="170" x2="680" y2="170" class="gridline"/>
+                            <line x1="30" y1="220" x2="680" y2="220" class="gridline"/>
+
+                            <polyline id="fb-grafico-ph" points="" class="ph-line"/>
+                            <polyline id="fb-grafico-temp" points="" class="temp-line"/>
+                            <g class="points" id="fb-grafico-pontos"></g>
+                        </svg>
+
+                        <div class="x-labels" id="fb-grafico-datas"></div>
+                    </div>
+                </article>
+
+                <!-- ÚLTIMA MEDIÇÃO -->
+                <article class="panel latest-panel">
+                    <div class="panel-header">
+                        <h2>◷ Última medição</h2>
+                        <a href="historico.html">Histórico →</a>
+                    </div>
+
+                    <p class="measurement-date">▣ <span id="fb-ultima-data-hora">--/--/---- • --:--</span></p>
+
+                    <div class="latest-values">
+                        <div>
+                            <span>💧</span>
+                            <small>pH</small>
+                            <strong id="fb-ultima-ph">--</strong>
+                            <em id="fb-ultima-ph-status">--</em>
+                        </div>
+
+                        <div>
+                            <span>🌡</span>
+                            <small>Temperatura</small>
+                            <strong id="fb-ultima-temp">-- °C</strong>
+                            <em id="fb-ultima-temp-status">--</em>
+                        </div>
+                    </div>
+
+                    <a class="primary-button" href="tratamento_ph.html" style="margin-top: 18px; text-decoration: none;">
+                        🧪 &nbsp; Abrir Controle de pH
+                    </a>
+                </article>
+
+            </div>
+
+            <!-- PAINEL INFERIOR: STATUS REAL DA ÁGUA & CENTRAL DE CONTROLE -->
+            <div class="bottom-grid" style="grid-template-columns: 1.2fr 1fr; margin-top: 25px;">
+
+                <!-- STATUS DA ÁGUA FUNCIONAL REAL -->
+                <article class="panel status-panel">
+                    <div class="panel-header">
+                        <h2>♧ Status da água (Cálculo em Tempo Real)</h2>
+                    </div>
+
+                    <div class="status-content">
+                        <div class="score">
+                            <div class="score-ring" id="fb-score-ring">
+                                <strong id="fb-score-pct">--%</strong>
+                                <span id="fb-score-label">Aguardando dados</span>
+                            </div>
+                        </div>
+
+                        <ul class="checks" id="fb-checks">
+                            <li id="fb-check-ph" style="color:#7fa9c4">◌ <span>pH (7,0 a 7,4) — aguardando</span></li>
+                            <li id="fb-check-temp" style="color:#7fa9c4">◌ <span>Temperatura (24 a 28 °C) — aguardando</span></li>
+                            <li id="fb-check-sensor" style="color:#7fa9c4">◌ <span>Sensor IoT funcionando</span></li>
+                            <li id="fb-check-alertas" style="color:#7fa9c4">◌ <span>Condição Geral da Água</span></li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- ATALHOS RÁPIDOS -->
+                <article class="panel shortcut-panel">
+                    <div class="panel-header">
+                        <h2>ϟ Ações e Recursos</h2>
+                    </div>
+
+                    <div class="shortcuts">
+                        <a href="tratamento_ph.html">🧪 <span>Como Tratar pH</span></a>
+                        <a href="tratamento_temperatura.html">🌡 <span>Gestão Térmica</span></a>
+                        <a href="historico.html">▥ <span>Ver Histórico</span></a>
+                        <a href="#secao-relatorios">📄 <span>Relatório PDF</span></a>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- ================= SEÇÃO DE RELATÓRIO PDF ================= -->
+            <div id="secao-relatorios" style="margin-top: 40px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 15px;">
+                    <div>
+                        <h2 style="font-size: 20px; color: #fff;">📄 Relatório Consolidado de Medições</h2>
+                        <p style="color: #8db8d1; font-size: 13px;">Gere um relatório técnico em formato PDF com todo o período de uso registrado.</p>
+                    </div>
+
+                    <button class="btn-gerar-pdf" onclick="gerarRelatorioPDF()">
+                        <i class="fa-solid fa-file-arrow-down"></i>
+                        Baixar Relatório em PDF (.pdf)
+                    </button>
+                </div>
+
+                <!-- DOCUMENTO FORMATADO PARA IMPRESSÃO / PDF -->
+                <div class="area-relatorio-pdf" id="conteudoRelatorioPDF">
+                    <div class="relatorio-header">
+                        <div>
+                            <h2>AQUA TRACK • RELATÓRIO DE MONITORAMENTO</h2>
+                            <p style="font-size: 13px; color: #4b5563;">Sistema IoT de Monitoramento de pH e Temperatura da Água</p>
+                        </div>
+                        <div class="relatorio-meta">
+                            <p><strong>Emissão:</strong> <span id="relatorioDataEmissao">--/--/----</span></p>
+                            <p><strong>Usuário:</strong> <span id="relatorioUsuarioNome">Usuário</span></p>
+                            <p><strong>Status Geral:</strong> <span id="relatorioStatusGeral">Em Análise</span></p>
+                        </div>
+                    </div>
+
+                    <!-- RESUMO ESTATÍSTICO -->
+                    <div class="relatorio-resumo-grid">
+                        <div class="relatorio-resumo-item">
+                            <span>Total de Leituras</span>
+                            <strong id="relatorioTotalLeituras">--</strong>
+                        </div>
+                        <div class="relatorio-resumo-item">
+                            <span>pH Médio Observado</span>
+                            <strong id="relatorioPhMedio">--</strong>
+                        </div>
+                        <div class="relatorio-resumo-item">
+                            <span>Temp. Média Observada</span>
+                            <strong id="relatorioTempMedia">-- °C</strong>
+                        </div>
+                        <div class="relatorio-resumo-item">
+                            <span>Estabilidade da Água</span>
+                            <strong id="relatorioEstabilidade">--%</strong>
+                        </div>
+                    </div>
+
+                    <h3 style="font-size: 15px; color: #087dc9; margin-bottom: 10px;">Histórico das Últimas Leituras Registradas</h3>
+                    <table class="tabela-relatorio">
+                        <thead>
+                            <tr>
+                                <th>Data e Hora</th>
+                                <th>pH Medido</th>
+                                <th>Status pH</th>
+                                <th>Temperatura</th>
+                                <th>Status Temp.</th>
+                                <th>Sensor</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaRelatorioCorpo">
+                            <tr>
+                                <td colspan="6" style="text-align: center; color: #9ca3af;">Carregando histórico do banco de dados...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #e5e7eb; font-size: 11px; color: #6b7280; display: flex; justify-content: space-between;">
+                        <span>Trabalho de Conclusão de Curso (TCC) • Aqua Track 2026</span>
+                        <span>Documento gerado automaticamente via Firebase Realtime Database</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+</div>
+
+```html
+<!-- =========================================================
+     FIREBASE SDK
+     ========================================================= -->
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<!-- Configuração original do projeto -->
+<script src="js/firebase-config.js"></script>
+<script src="js/firebase.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+
+
+<script>
+
+/* =========================================================
+   AQUA TRACK
+   Dashboard + Firebase Realtime Database
+   ========================================================= */
+
+console.log("========================================");
+console.log("AQUA TRACK - INICIANDO DASHBOARD");
+console.log("========================================");
+
+
+// ---------------------------------------------------------
+// VARIÁVEIS
+// ---------------------------------------------------------
+
+let dadosHistoricoGlobal = [];
+
+
+// ---------------------------------------------------------
+// FUNÇÃO AUXILIAR PARA ALTERAR ELEMENTOS DA TELA
+// ---------------------------------------------------------
+
+function set(id, valor) {
+
+    const elemento = document.getElementById(id);
+
+    if (!elemento) {
+        console.warn("[AquaTrack] Elemento não encontrado:", id);
+        return;
+    }
+
+    elemento.textContent = valor;
+}
+
+
+// ---------------------------------------------------------
+// VERIFICAÇÃO DO FIREBASE
+// ---------------------------------------------------------
+
+console.log("[AquaTrack] Firebase disponível:", typeof firebase !== "undefined");
+
+console.log("[AquaTrack] Firebase Config disponível:",
+    typeof firebaseConfig !== "undefined"
+);
+
+console.log("[AquaTrack] Auth disponível:",
+    typeof auth !== "undefined" && auth !== null
+);
+
+console.log("[AquaTrack] Database disponível:",
+    typeof db !== "undefined" && db !== null
+);
+
+
+// ---------------------------------------------------------
+// AUTENTICAÇÃO
+// ---------------------------------------------------------
+
+if (typeof verificarAutenticacao === "function") {
+
+    verificarAutenticacao(true, function(usuario) {
+
+        console.log("[AquaTrack] Usuário autenticado:", usuario.email);
+
+        const nome =
+            usuario.displayName ||
+            usuario.email.split("@")[0];
+
+        set("topoNomeUsuario", "Olá, " + nome + "!");
+        set("saudacaoNomeUsuario", "Olá, " + nome + "!");
+        set("relatorioUsuarioNome", nome);
+
+    });
+
+} else {
+
+    console.error(
+        "[AquaTrack] ERRO: função verificarAutenticacao() não encontrada."
+    );
+
+}
+
+
+// ---------------------------------------------------------
+// DATA DE EMISSÃO DO RELATÓRIO
+// ---------------------------------------------------------
+
+const agora = new Date();
+
+set(
+    "relatorioDataEmissao",
+    agora.toLocaleDateString("pt-BR") +
+    " " +
+    agora.toLocaleTimeString("pt-BR").slice(0, 5)
+);
+
+
+// =========================================================
+// FIREBASE REALTIME DATABASE
+// =========================================================
+
+if (typeof db === "undefined" || db === null) {
+
+    console.error(
+        "[AquaTrack] ERRO GRAVE: o objeto 'db' não foi criado."
+    );
+
+    alert(
+        "O Firebase Realtime Database não foi inicializado. " +
+        "Abra o console do navegador (F12) para verificar o erro."
+    );
+
+} else {
+
+    console.log(
+        "[AquaTrack] Firebase Realtime Database conectado."
+    );
+
+
+    // =====================================================
+    // 1. MEDIÇÃO ATUAL
+    //
+    // Caminho:
+    // /medicoes/atual
+    //
+    // Formato esperado:
+    //
+    // medicoes
+    //   └── atual
+    //        ├── ph
+    //        ├── temperatura
+    //        ├── timestamp
+    //        └── sensor_online
+    // =====================================================
+
+    const referenciaAtual = db.ref("medicoes/atual");
+
+    console.log(
+        "[AquaTrack] Escutando:",
+        "medicoes/atual"
+    );
+
+
+    referenciaAtual.on(
+        "value",
+
+        function(snapshot) {
+
+            console.log(
+                "[AquaTrack] DADOS RECEBIDOS DE /medicoes/atual:"
+            );
+
+            console.log(snapshot.val());
+
+
+            const dado = snapshot.val();
+
+
+            // -------------------------------------------------
+            // Firebase respondeu, mas não existe dado
+            // -------------------------------------------------
+
+            if (dado === null) {
+
+                console.warn(
+                    "[AquaTrack] /medicoes/atual está vazio."
+                );
+
+                set("fb-ph-badge", "● Aguardando dados...");
+                set("fb-temp-badge", "● Aguardando dados...");
+                set("fb-sensor-status", "● Desconectado");
+
+                return;
+            }
+
+
+            // -------------------------------------------------
+            // MOSTRAR OBJETO RECEBIDO
+            // -------------------------------------------------
+
+            console.log(
+                "[AquaTrack] Objeto recebido:",
+                dado
+            );
+
+
+            // -------------------------------------------------
+            // PEGAR pH
+            // -------------------------------------------------
+
+            const ph = Number(dado.ph);
+
+
+            // -------------------------------------------------
+            // PEGAR TEMPERATURA
+            // -------------------------------------------------
+
+            const temperatura = Number(
+                dado.temperatura
+            );
+
+
+            // -------------------------------------------------
+            // PEGAR TIMESTAMP
+            // -------------------------------------------------
+
+            const timestamp =
+                Number(dado.timestamp) ||
+                Date.now();
+
+
+            // -------------------------------------------------
+            // VERIFICAR SE OS DADOS SÃO VÁLIDOS
+            // -------------------------------------------------
+
+            if (Number.isNaN(ph)) {
+
+                console.error(
+                    "[AquaTrack] ERRO: valor de pH inválido:",
+                    dado.ph
+                );
+
+                return;
+            }
+
+
+            if (Number.isNaN(temperatura)) {
+
+                console.error(
+                    "[AquaTrack] ERRO: temperatura inválida:",
+                    dado.temperatura
+                );
+
+                return;
+            }
+
+
+            console.log(
+                "[AquaTrack] pH:",
+                ph
+            );
+
+            console.log(
+                "[AquaTrack] Temperatura:",
+                temperatura
+            );
+
+            console.log(
+                "[AquaTrack] Sensor online:",
+                dado.sensor_online
+            );
+
+
+            // =================================================
+            // ATUALIZAR CARD DE pH
+            // =================================================
+
+            set(
+                "fb-ph-valor",
+                ph.toFixed(1).replace(".", ",")
+            );
+
+
+            const statusPh = statusPH(ph);
+
+
+            const badgePh =
+                document.getElementById("fb-ph-badge");
+
+
+            if (badgePh) {
+
+                badgePh.textContent =
+                    "● " + statusPh.texto;
+
+                badgePh.className =
+                    "badge " + statusPh.classe;
+            }
+
+
+            // =================================================
+            // ATUALIZAR CARD DE TEMPERATURA
+            // =================================================
+
+            set(
+                "fb-temp-valor",
+                temperatura
+                    .toFixed(1)
+                    .replace(".", ",") + " °C"
+            );
+
+
+            const statusTemperatura =
+                statusTemp(temperatura);
+
+
+            const badgeTemperatura =
+                document.getElementById(
+                    "fb-temp-badge"
+                );
+
+
+            if (badgeTemperatura) {
+
+                badgeTemperatura.textContent =
+                    "● " +
+                    statusTemperatura.texto;
+
+                badgeTemperatura.className =
+                    "badge " +
+                    statusTemperatura.classe;
+            }
+
+
+            // =================================================
+            // SENSOR ONLINE
+            // =================================================
+
+            const sensorOnline =
+                dado.sensor_online === true ||
+                dado.sensor_online === 1 ||
+                dado.sensor_online === "true";
+
+
+            const sensorElemento =
+                document.getElementById(
+                    "fb-sensor-status"
+                );
+
+
+            if (sensorElemento) {
+
+                if (sensorOnline) {
+
+                    sensorElemento.textContent =
+                        "● Conectado";
+
+                    sensorElemento.className =
+                        "connected";
+
+                } else {
+
+                    sensorElemento.textContent =
+                        "● Desconectado";
+
+                    sensorElemento.className =
+                        "disconnected";
+                }
+            }
+
+
+            // =================================================
+            // DATA E HORA
+            // =================================================
+
+            const dataHora =
+                formatarData(timestamp);
+
+
+            set(
+                "fb-data-ultima",
+                dataHora.data
+            );
+
+            set(
+                "fb-hora-ultima",
+                dataHora.hora
+            );
+
+            set(
+                "fb-ultima-data-hora",
+                dataHora.data +
+                " • " +
+                dataHora.hora
+            );
+
+            set(
+                "fb-ultima-info",
+                dataHora.data +
+                " • " +
+                dataHora.hora
+            );
+
+
+            // =================================================
+            // ÚLTIMA MEDIÇÃO
+            // =================================================
+
+            set(
+                "fb-ultima-ph",
+                ph.toFixed(1).replace(".", ",")
+            );
+
+            set(
+                "fb-ultima-ph-status",
+                statusPh.texto
+            );
+
+
+            set(
+                "fb-ultima-temp",
+                temperatura
+                    .toFixed(1)
+                    .replace(".", ",") +
+                " °C"
+            );
+
+            set(
+                "fb-ultima-temp-status",
+                statusTemperatura.texto
+            );
+
+
+            // =================================================
+            // STATUS DA ÁGUA
+            // =================================================
+
+            const phOk =
+                statusPh.ideal;
+
+            const temperaturaOk =
+                statusTemperatura.ideal;
+
+
+            let pontuacao = 0;
+
+
+            if (phOk) {
+
+                pontuacao += 50;
+            }
+
+
+            if (temperaturaOk) {
+
+                pontuacao += 30;
+            }
+
+
+            if (sensorOnline) {
+
+                pontuacao += 20;
+            }
+
+
+            set(
+                "fb-score-pct",
+                pontuacao + "%"
+            );
+
+
+            let textoStatus;
+
+
+            if (pontuacao === 100) {
+
+                textoStatus =
+                    "Parâmetros Ideais";
+
+            } else if (pontuacao >= 70) {
+
+                textoStatus =
+                    "Atenção Necessária";
+
+            } else {
+
+                textoStatus =
+                    "Fora dos Padrões!";
+            }
+
+
+            set(
+                "fb-score-label",
+                textoStatus
+            );
+
+
+            // =================================================
+            // CÍRCULO DE STATUS
+            // =================================================
+
+            const ring =
+                document.getElementById(
+                    "fb-score-ring"
+                );
+
+
+            if (ring) {
+
+                if (pontuacao === 100) {
+
+                    ring.style.borderColor =
+                        "#34dda0";
+
+                } else if (pontuacao >= 70) {
+
+                    ring.style.borderColor =
+                        "#fabd47";
+
+                } else {
+
+                    ring.style.borderColor =
+                        "#ff4d4d";
+                }
+            }
+
+
+            // =================================================
+            // CHECKS DO STATUS
+            // =================================================
+
+            function atualizarCheck(
+                id,
+                correto,
+                textoCorreto,
+                textoErro
+            ) {
+
+                const elemento =
+                    document.getElementById(id);
+
+
+                if (!elemento) {
+                    return;
+                }
+
+
+                elemento.style.color =
+                    correto
+                        ? "#36dfa0"
+                        : "#ff7a72";
+
+
+                elemento.innerHTML =
+                    (correto ? "✓" : "✗") +
+                    " <span>" +
+                    (
+                        correto
+                            ? textoCorreto
+                            : textoErro
+                    ) +
+                    "</span>";
+            }
+
+
+            atualizarCheck(
+                "fb-check-ph",
+                phOk,
+                "pH dentro da faixa ideal (7,0 a 7,4)",
+                "pH fora da faixa ideal"
+            );
+
+
+            atualizarCheck(
+                "fb-check-temp",
+                temperaturaOk,
+                "Temperatura adequada (24 a 28 °C)",
+                "Temperatura fora da faixa"
+            );
+
+
+            atualizarCheck(
+                "fb-check-sensor",
+                sensorOnline,
+                "Sensor ESP32 Online",
+                "Sensor Desconectado"
+            );
+
+
+            atualizarCheck(
+                "fb-check-alertas",
+                phOk && temperaturaOk,
+                "Sem alertas críticos de água",
+                "Alerta: consulte o Guia de Tratamento"
+            );
+
+
+            // =================================================
+            // STATUS DO RELATÓRIO
+            // =================================================
+
+            set(
+                "relatorioStatusGeral",
+                pontuacao === 100
+                    ? "Excelente (100%)"
+                    : pontuacao >= 70
+                        ? "Moderado"
+                        : "Atenção Crítica"
+            );
+
+
+            // =================================================
+            // ALERTA NO TOPO
+            // =================================================
+
+            const indicador =
+                document.getElementById(
+                    "indicadorAlertaTopbar"
+                );
+
+
+            if (!phOk) {
+
+                if (
+                    typeof exibirPopupAlertaPH ===
+                    "function"
+                ) {
+
+                    exibirPopupAlertaPH(
+                        ph,
+                        statusPh.tipo
+                    );
+                }
+
+
+                if (indicador) {
+
+                    indicador.style.display =
+                        "block";
+                }
+
+            } else {
+
+                if (
+                    typeof fecharPopupAlertaPH ===
+                    "function"
+                ) {
+
+                    fecharPopupAlertaPH();
+                }
+
+
+                if (indicador) {
+
+                    indicador.style.display =
+                        "none";
+                }
+            }
+
+
+            console.log(
+                "[AquaTrack] Dashboard atualizado com sucesso."
+            );
+
+        },
+
+
+        // =====================================================
+        // ERRO DE LEITURA DO FIREBASE
+        //
+        // ESTE BLOCO É MUITO IMPORTANTE.
+        // Antes ele não existia.
+        // =====================================================
+
+        function(error) {
+
+            console.error(
+                "========================================"
+            );
+
+            console.error(
+                "[AquaTrack] ERRO AO LER FIREBASE"
+            );
+
+            console.error(
+                "Código:",
+                error.code
+            );
+
+            console.error(
+                "Mensagem:",
+                error.message
+            );
+
+            console.error(
+                "========================================"
+            );
+
+
+            set(
+                "fb-ph-badge",
+                "● Erro ao ler Firebase"
+            );
+
+            set(
+                "fb-temp-badge",
+                "● Erro ao ler Firebase"
+            );
+
+
+            set(
+                "fb-sensor-status",
+                "● Erro de conexão"
+            );
+        }
+    );
+
+
+    // =====================================================
+    // 2. TOTAL DE MEDIÇÕES
+    // =====================================================
+
+    const referenciaTotal =
+        db.ref("medicoes/total");
+
+
+    console.log(
+        "[AquaTrack] Escutando:",
+        "medicoes/total"
+    );
+
+
+    referenciaTotal.on(
+        "value",
+
+        function(snapshot) {
+
+            console.log(
+                "[AquaTrack] Total recebido:",
+                snapshot.val()
+            );
+
+
+            const total =
+                snapshot.val();
+
+
+            if (
+                total !== null &&
+                total !== undefined
+            ) {
+
+                set(
+                    "fb-total-medicoes",
+                    total
+                );
+
+                set(
+                    "relatorioTotalLeituras",
+                    total
+                );
+            }
+        },
+
+        function(error) {
+
+            console.error(
+                "[AquaTrack] Erro ao ler /medicoes/total:",
+                error
+            );
+        }
+    );
+
+
+    // =====================================================
+    // 3. HISTÓRICO
+    // =====================================================
+
+    const referenciaHistorico =
+        db.ref("medicoes/historico");
+
+
+    console.log(
+        "[AquaTrack] Escutando:",
+        "medicoes/historico"
+    );
+
+
+    referenciaHistorico.on(
+        "value",
+
+        function(snapshot) {
+
+            console.log(
+                "[AquaTrack] Histórico recebido:",
+                snapshot.val()
+            );
+
+
+            dadosHistoricoGlobal = [];
+
+
+            snapshot.forEach(function(child) {
+
+                const valor =
+                    child.val();
+
+
+                if (valor) {
+
+                    dadosHistoricoGlobal.push(
+                        valor
+                    );
+                }
+            });
+
+
+            console.log(
+                "[AquaTrack] Quantidade de registros:",
+                dadosHistoricoGlobal.length
+            );
+
+
+            if (
+                dadosHistoricoGlobal.length === 0
+            ) {
+
+                console.warn(
+                    "[AquaTrack] Histórico vazio."
+                );
+
+                return;
+            }
+
+
+            // Atualiza tabela do relatório
+
+            atualizarTabelaRelatorio(
+                dadosHistoricoGlobal
+            );
+
+
+            // Pega somente as últimas 7
+
+            const ultimos7 =
+                dadosHistoricoGlobal.slice(-7);
+
+
+            atualizarGraficoSVG(
+                ultimos7
+            );
+        },
+
+        function(error) {
+
+            console.error(
+                "[AquaTrack] Erro ao ler histórico:",
+                error
+            );
+        }
+    );
+}
+
+
+// =========================================================
+// CONVERSÃO DE pH PARA O GRÁFICO
+// =========================================================
+
+function phParaY(ph) {
+
+    const minimo = 6;
+    const maximo = 8;
+
+    return 220 -
+        (
+            (ph - minimo) /
+            (maximo - minimo)
+        ) * 200;
+}
+
+
+// =========================================================
+// CONVERSÃO DE TEMPERATURA PARA O GRÁFICO
+// =========================================================
+
+function tempParaY(temp) {
+
+    const minimo = 20;
+    const maximo = 32;
+
+    return 220 -
+        (
+            (temp - minimo) /
+            (maximo - minimo)
+        ) * 200;
+}
+
+
+// =========================================================
+// ATUALIZAÇÃO DO GRÁFICO
+// =========================================================
+
+function atualizarGraficoSVG(dados) {
+
+    const svgW = 700;
+    const pad = 35;
+
+
+    const step =
+        dados.length > 1
+            ? (svgW - pad * 2) /
+              (dados.length - 1)
+            : 0;
+
+
+    let pontosPH = "";
+    let pontosTemp = "";
+    let datasHTML = "";
+
+
+    const pontosElemento =
+        document.getElementById(
+            "fb-grafico-pontos"
+        );
+
+
+    if (pontosElemento) {
+
+        pontosElemento.innerHTML = "";
+    }
+
+
+    dados.forEach(function(dado, indice) {
+
+        const ph =
+            Number(dado.ph);
+
+
+        const temperatura =
+            Number(dado.temperatura);
+
+
+        if (
+            Number.isNaN(ph) ||
+            Number.isNaN(temperatura)
+        ) {
+
+            return;
+        }
+
+
+        const x =
+            dados.length > 1
+                ? pad + indice * step
+                : svgW / 2;
+
+
+        const yPh =
+            Math.max(
+                20,
+                Math.min(
+                    220,
+                    phParaY(ph)
+                )
+            );
+
+
+        const yTemp =
+            Math.max(
+                20,
+                Math.min(
+                    220,
+                    tempParaY(temperatura)
+                )
+            );
+
+
+        pontosPH +=
+            x + "," + yPh + " ";
+
+
+        pontosTemp +=
+            x + "," + yTemp + " ";
+
+
+        if (pontosElemento) {
+
+            const circulo =
+                document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "circle"
+                );
+
+
+            circulo.setAttribute(
+                "cx",
+                x
+            );
+
+
+            circulo.setAttribute(
+                "cy",
+                yPh
+            );
+
+
+            circulo.setAttribute(
+                "r",
+                5
+            );
+
+
+            pontosElemento.appendChild(
+                circulo
+            );
+        }
+
+
+        const label =
+            dado.timestamp
+                ? formatarData(
+                    dado.timestamp
+                ).data.slice(0, 5)
+                : "--/--";
+
+
+        datasHTML +=
+            "<span>" +
+            label +
+            "</span>";
+    });
+
+
+    const graficoPh =
+        document.getElementById(
+            "fb-grafico-ph"
+        );
+
+
+    const graficoTemp =
+        document.getElementById(
+            "fb-grafico-temp"
+        );
+
+
+    const datas =
+        document.getElementById(
+            "fb-grafico-datas"
+        );
+
+
+    if (graficoPh) {
+
+        graficoPh.setAttribute(
+            "points",
+            pontosPH.trim()
+        );
+    }
+
+
+    if (graficoTemp) {
+
+        graficoTemp.setAttribute(
+            "points",
+            pontosTemp.trim()
+        );
+    }
+
+
+    if (datas) {
+
+        datas.innerHTML =
+            datasHTML;
+    }
+}
+
+
+// =========================================================
+// TABELA DO RELATÓRIO
+// =========================================================
+
+function atualizarTabelaRelatorio(dados) {
+
+    const corpo =
+        document.getElementById(
+            "tabelaRelatorioCorpo"
+        );
+
+
+    if (!corpo) {
+        return;
+    }
+
+
+    corpo.innerHTML = "";
+
+
+    let somaPh = 0;
+    let somaTemp = 0;
+    let quantidade = 0;
+
+
+    dados
+        .slice(-15)
+        .reverse()
+        .forEach(function(dado) {
+
+
+            const ph =
+                Number(dado.ph);
+
+
+            const temperatura =
+                Number(dado.temperatura);
+
+
+            if (
+                Number.isNaN(ph) ||
+                Number.isNaN(temperatura)
+            ) {
+
+                return;
+            }
+
+
+            somaPh += ph;
+            somaTemp += temperatura;
+
+            quantidade++;
+
+
+            const statusPhAtual =
+                statusPH(ph);
+
+
+            const statusTempAtual =
+                statusTemp(temperatura);
+
+
+            const dataHora =
+                formatarData(
+                    dado.timestamp
+                );
+
+
+            const linha =
+                document.createElement("tr");
+
+
+            linha.innerHTML = `
+
+                <td>
+                    ${dataHora.data}
+                    ${dataHora.hora}
+                </td>
+
+                <td>
+                    <strong>
+                        ${ph.toFixed(1).replace(".", ",")}
+                    </strong>
+                </td>
+
+                <td
+                    style="
+                        color:
+                        ${statusPhAtual.ideal
+                            ? "#059669"
+                            : "#dc2626"};
+                        font-weight:600;
+                    "
+                >
+                    ${statusPhAtual.texto}
+                </td>
+
+                <td>
+                    ${temperatura
+                        .toFixed(1)
+                        .replace(".", ",")} °C
+                </td>
+
+                <td
+                    style="
+                        color:
+                        ${statusTempAtual.ideal
+                            ? "#059669"
+                            : "#dc2626"};
+                    "
+                >
+                    ${statusTempAtual.texto}
+                </td>
+
+                <td>
+                    ${dado.sensor_online
+                        ? "Online"
+                        : "Offline"}
+                </td>
+            `;
+
+
+            corpo.appendChild(
+                linha
+            );
+        });
+
+
+    if (quantidade > 0) {
+
+        const mediaPh =
+            (
+                somaPh /
+                quantidade
+            )
+            .toFixed(1)
+            .replace(".", ",");
+
+
+        const mediaTemp =
+            (
+                somaTemp /
+                quantidade
+            )
+            .toFixed(1)
+            .replace(".", ",");
+
+
+        set(
+            "relatorioPhMedio",
+            mediaPh
+        );
+
+
+        set(
+            "relatorioTempMedia",
+            mediaTemp + " °C"
+        );
+
+
+        set(
+            "relatorioEstabilidade",
+            "94%"
+        );
+    }
+}
+
+
+console.log(
+    "========================================"
+);
+
+console.log(
+    "AQUA TRACK - SCRIPT FINALIZADO"
+);
+
+console.log(
+    "========================================"
+);
+
+</script>
+
+</body>
+</html>
+```

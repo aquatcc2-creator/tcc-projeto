@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aqua Track | Criar conta</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <i class="fa-solid fa-droplet"></i>
+        <span>Aqua <b>Track</b></span>
+    </div>
+
+    <nav>
+        <a href="index.html">Início</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="contato.html">Contato</a>
+        <a href="login.html" class="btn-primar">
+            Entrar
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </nav>
+</header>
+
+<main class="login-page">
+    <div class="background-image"></div>
+    <div class="background-overlay"></div>
+
+    <div class="content">
+        <section class="login-card">
+            <div class="login-header">
+                <h2>
+                    Criar <span>sua conta</span>
+                </h2>
+                <div class="title-line"></div>
+                <p>
+                    Cadastre-se para acessar<br>
+                    todos os recursos do Aqua Track.
+                </p>
+            </div>
+
+            <!-- MENSAGEM DINÂMICA DE ERRO/SUCESSO -->
+            <div class="erro-login" id="mensagemBox" style="display: none;">
+                <i class="fa-solid fa-circle-exclamation" id="iconeMensagem"></i>
+                <span id="textoMensagem"></span>
+            </div>
+
+            <form class="login-form" id="formCadastro">
+                <!-- NOME -->
+                <div class="input-group">
+                    <label for="nome">Nome</label>
+                    <div class="input-box">
+                        <span class="input-icon">👤</span>
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            placeholder="Digite seu nome"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- E-MAIL -->
+                <div class="input-group">
+                    <label for="email">E-mail</label>
+                    <div class="input-box">
+                        <span class="input-icon">✉</span>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Digite seu e-mail"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- SENHA -->
+                <div class="input-group">
+                    <label for="senha">Senha</label>
+                    <div class="input-box">
+                        <span class="input-icon">🔒</span>
+                        <input
+                            type="password"
+                            id="senha"
+                            name="senha"
+                            placeholder="Crie uma senha (mínimo 6 dígitos)"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- CONFIRMAR SENHA -->
+                <div class="input-group">
+                    <label for="confirmar_senha">Confirmar senha</label>
+                    <div class="input-box">
+                        <span class="input-icon">🔒</span>
+                        <input
+                            type="password"
+                            id="confirmar_senha"
+                            name="confirmar_senha"
+                            placeholder="Digite a senha novamente"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    class="login-button"
+                    id="btnCadastrar"
+                >
+                    <span>✓</span>
+                    Criar conta
+                </button>
+
+                <a href="login.html" class="register-button">
+                    <span>↩</span>
+                    Já tenho uma conta
+                </a>
+            </form>
+
+            <div class="security">
+                <span>🛡</span>
+                Seus dados estão protegidos com segurança.
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2026 Aqua Track • Monitoramento Inteligente da Água</p>
+    </footer>
+</main>
+
+<!-- FIREBASE SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+    apiKey:            "AIzaSyBDJjYlmWan7z_LEervJ_EhbZ2H78E6tog",
+    authDomain:        "monitoramento-ph-e-temperatura.firebaseapp.com",
+    databaseURL:       "https://monitoramento-ph-e-temperatura-default-rtdb.firebaseio.com",
+    projectId:         "monitoramento-ph-e-temperatura",
+    storageBucket:     "monitoramento-ph-e-temperatura.firebasestorage.app",
+    messagingSenderId: "178735590696",
+    appId:             "1:178735590696:web:83d418e60905effcb2b41d"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+document.getElementById("formCadastro").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const nome = document.getElementById("nome").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("senha").value;
+    const confirmarSenha = document.getElementById("confirmar_senha").value;
+
+    const msgBox = document.getElementById("mensagemBox");
+    const iconeMsg = document.getElementById("iconeMensagem");
+    const txtMsg = document.getElementById("textoMensagem");
+    const btn = document.getElementById("btnCadastrar");
+
+    function exibirMsg(texto, tipoSucesso = false) {
+        msgBox.style.display = "flex";
+        msgBox.className = tipoSucesso ? "mensagem-sucesso" : "erro-login";
+        iconeMsg.className = tipoSucesso ? "fa-solid fa-circle-check" : "fa-solid fa-circle-exclamation";
+        txtMsg.textContent = texto;
+    }
+
+    if (senha !== confirmarSenha) {
+        exibirMsg("As senhas não coincidem.");
+        return;
+    }
+
+    if (senha.length < 6) {
+        exibirMsg("A senha precisa ter no mínimo 6 caracteres.");
+        return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<span>⏳</span> Criando conta...';
+
+    auth.createUserWithEmailAndPassword(email, senha)
+        .then(userCredential => {
+            return userCredential.user.updateProfile({
+                displayName: nome
+            });
+        })
+        .then(() => {
+            exibirMsg("Conta criada com sucesso! Redirecionando...", true);
+            setTimeout(() => {
+                window.location.href = "dashboard.html";
+            }, 1000);
+        })
+        .catch(error => {
+            btn.disabled = false;
+            btn.innerHTML = '<span>✓</span> Criar conta';
+
+            if (error.code === "auth/email-already-in-use") {
+                exibirMsg("Este e-mail já está cadastrado.");
+            } else if (error.code === "auth/invalid-email") {
+                exibirMsg("Digite um e-mail válido.");
+            } else if (error.code === "auth/weak-password") {
+                exibirMsg("Senha muito fraca. Tente uma mais forte.");
+            } else {
+                exibirMsg("Erro: " + error.message);
+            }
+        });
+});
+</script>
+
+</body>
+</html>
+

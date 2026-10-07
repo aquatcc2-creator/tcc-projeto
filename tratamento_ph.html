@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aqua Track | Controle e Tratamento de pH</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <i class="fa-solid fa-droplet" style="color: #00bfff; font-size: 32px;"></i>
+            <div>
+                <strong>Aqua <span>Track</span></strong>
+                <small>MONITORAMENTO DA ÁGUA</small>
+            </div>
+        </div>
+
+        <nav class="menu">
+            <a class="menu-item" href="dashboard.html">
+                <span>⌂</span> Medição Atual
+            </a>
+
+            <a class="menu-item" href="historico.html">
+                <span>▥</span> Histórico de Medições
+            </a>
+
+            <a class="menu-item active" href="tratamento_ph.html">
+                <span>🧪</span> Controle de pH
+            </a>
+
+            <a class="menu-item" href="tratamento_temperatura.html">
+                <span>🌡</span> Controle de Temperatura
+            </a>
+
+            <a class="menu-item" href="#secao-relatorios">
+                <span>📄</span> Relatórios (PDF)
+            </a>
+
+            <a class="menu-item" href="alertas.html">
+                <span>⚠️</span> Central de Alertas
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="wave"></div>
+            <p>Cuidar da água<br>é cuidar do futuro.</p>
+            <div>〰〰</div>
+        </div>
+    </aside>
+
+    <main class="main">
+        <header class="topbar">
+            <div>
+                <h1>GUIA DE TRATAMENTO E CONTROLE DE pH</h1>
+                <p>Instruções práticas para reequilibrar a qualidade da sua água.</p>
+            </div>
+
+            <div class="user-area">
+                <div class="avatar">👤</div>
+                <span id="topoNomeUsuario">Olá, Usuário!</span>
+                <button id="btnSair" title="Sair da conta" style="background: none; border: 1px solid var(--border); color: #ff7a72; border-radius: 8px; padding: 4px 10px; cursor: pointer; font-size: 11px; margin-left: 8px;">
+                    Sair
+                </button>
+            </div>
+        </header>
+
+        <section class="content">
+
+            <!-- BANNER DE STATUS ATUAL DO SENSOR -->
+            <div style="background: rgba(3, 33, 61, 0.85); border: 1px solid var(--border); border-radius: 16px; padding: 22px 26px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap: 15px;">
+                <div>
+                    <span style="color: #7fa9c4; font-size: 12px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px;">Leitura Atual do Sensor em Tempo Real:</span>
+                    <div style="display: flex; align-items: baseline; gap: 12px; margin-top: 5px;">
+                        <h2 style="font-size: 32px; color: #fff;"><span id="phAtualValor">--</span></h2>
+                        <span class="badge" id="phAtualBadge">● Carregando...</span>
+                    </div>
+                </div>
+
+                <div style="text-align: right;">
+                    <span style="color: #8db8d1; font-size: 12px;">Faixa Ideal Recomendada:</span>
+                    <strong style="display: block; font-size: 16px; color: #35df9b;">7,0 a 7,4</strong>
+                </div>
+            </div>
+
+            <!-- GRID COM OS DOIS CENÁRIOS DE TRATAMENTO -->
+            <div class="guia-tratamento-grid">
+
+                <!-- CENÁRIO 1: pH ABAIXO DO NORMAL (ÁCIDO) -->
+                <article class="card-tratamento acido">
+                    <h3>
+                        <i class="fa-solid fa-arrow-trend-down"></i>
+                        pH Abaixo de 7,0 (Ácido)
+                    </h3>
+                    <p style="color: #ffcccc; font-size: 13px; line-height: 1.5;">
+                        <strong>Sintomas e Consequências:</strong> Irritação intensa nos olhos e na pele, ressecamento capilar, corrosão acelerada de motores, tubulações e aquecedores, e destruição precoce de rejuntes e alvenarias.
+                    </p>
+
+                    <h4 style="color: #55d6ff; font-size: 14px; margin-top: 20px;">
+                        <i class="fa-solid fa-wrench"></i> O que fazer para corrigir (Elevar o pH):
+                    </h4>
+
+                    <ul class="passo-a-passo">
+                        <li>
+                            <span class="num">1</span>
+                            <div>
+                                <strong>Adicionar Elevador de pH (Barrilha Leve / Carbonato de Sódio):</strong>
+                                <p style="color: #a4c9df; font-size: 12px; margin-top: 3px;">A Barrilha é o produto químico padrão para aumentar o pH sem turvar a água de forma duradoura.</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <span class="num">2</span>
+                            <div>
+                                <strong>Calcular a Dosagem Recomendada:</strong>
+                                <p style="color: #a4c9df; font-size: 12px; margin-top: 3px;">Geralmente utiliza-se de <strong>10g a 20g de barrilha para cada 1.000 litros de água</strong> (1 m³), dependendo de quão abaixo de 7.0 a água estiver.</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <span class="num">3</span>
+                            <div>
+                                <strong>Dissolver e Distribuir com Recirculação:</strong>
+                                <p style="color: #a4c9df; font-size: 12px; margin-top: 3px;">Dissolva a barrilha em um balde plástico com a própria água do reservatório e espalhe homogeneamente sobre a superfície com a bomba em modo <strong>recircular</strong> por pelo menos 1 a 2 horas.</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <span class="num">4</span>
+                            <div>
+                                <strong>Aguardar e Medir Novamente:</strong>
+                                <p style="color: #a4c9df; font-size: 12px; margin-top: 3px;">Após 2 a 4 horas de circulação, verifique no painel do Aqua Track se o pH estabilizou entre 7.0 e 7.4.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+
+                <!-- CENÁRIO 2: pH ACIMA DO NORMAL (BÁSICO / ALCALINO) -->
+                <article class="card-tratamento alcalino">
+                    <h3>
+                        <i class="fa-solid fa-arrow-trend-up"></i>
+                        pH Acima de 7,4 (Alcalino)
+                    </h3>
+                    <p style="color: #d1effc; font-size: 13px; line-height: 1.5;">
+                        <strong>Sintomas e Consequências:</strong> Água esbranquiçada e turva, formação de incrustações de calcário nas tubulações e filtros, e <strong>perda de até 70% da eficácia do cloro</strong>, propiciando água verde com algas.
+                    </p>
+
+                    <h4 style="color: #55d6ff; font-size: 14px; margin-top: 20px;">
+                        <i class="fa-solid fa-wrench"></i> O que fazer para corrigir (Reduzir o pH):
+                    </h4>
+
+                    <ul class="passo-a-passo">
+                        <li>
+                            <span class="num">1</span>
+                            <div>
+                                <strong>Adicionar Redutor de pH e Alcalinidade (Ácido Muriático ou Bissulfato de Sódio):</strong>
+                                <p style="color: #a4c9df; font-size: 12px; margin-top: 3px;">O redutor líquido à base de ácido clorídrico neutraliza o excesso de hidroxilas (OH⁻).</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <span class="num">2</span>
+                            <div>
+                                <strong>Calcular a Dosagem Recomendada:</strong>
+                                <p style="color: #a4c9df; font-size: 12px; margin-top: 3px;">Recomenda-se em média <strong>5ml a 10ml de redutor líquido para cada 1.000 litros de água</strong> (consulte a embalagem do fabricante).</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <span class="num">3</span>
+                            <div>
+                                <strong>Aplicação com Cuidado e Proteção:</strong>
+                                <p style="color: #a4c9df; font-size: 12px; margin-top: 3px;">Utilize luvas e óculos. Nunca adicione água no ácido, e sim o produto lentamente na água. Ligue a bomba no modo <strong>filtrar ou recircular</strong>.</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <span class="num">4</span>
+                            <div>
+                                <strong>Acompanhamento no Aqua Track:</strong>
+                                <p style="color: #a4c9df; font-size: 12px; margin-top: 3px;">O sensor registrará a queda progressiva do pH. Quando atingir a faixa verde (7,0 a 7,4), a água estará pronta para uso seguro.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+
+            </div>
+
+            <!-- DICAS DE BOAS PRÁTICAS -->
+            <div style="background: rgba(3, 33, 61, 0.7); border: 1px solid rgba(44, 174, 239, 0.25); border-radius: 16px; padding: 25px; margin-top: 30px;">
+                <h3 style="color: #35df9b; font-size: 16px; margin-bottom: 12px;">
+                    <i class="fa-solid fa-lightbulb"></i> Regra de Ouro da Manutenção
+                </h3>
+                <p style="color: #c7e6f8; font-size: 13px; line-height: 1.6;">
+                    Sempre ajuste primeiro a <strong>Alcalinidade Total (ideal: 80 a 120 ppm)</strong> e depois o <strong>pH (7,0 a 7,4)</strong>. A alcalinidade atua como um "efeito tampão", impedindo que o pH sofra oscilações bruscas quando chove ou quando produtos químicos são dosados.
+                </p>
+            </div>
+
+        </section>
+    </main>
+</div>
+
+<!-- FIREBASE SDK & CONTROLES -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/firebase.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+verificarAutenticacao(true);
+
+// Escuta o pH atual no Firebase para alimentar o topo da página de tratamento
+if (db) {
+    db.ref('/medicoes/atual').on('value', snap => {
+        const dado = snap.val();
+        if (!dado) return;
+        const ph = parseFloat(dado.ph);
+        if (isNaN(ph)) return;
+
+        const elVal = document.getElementById("phAtualValor");
+        const elBadge = document.getElementById("phAtualBadge");
+        if (elVal) elVal.textContent = ph.toFixed(1).replace('.', ',');
+
+        const s = statusPH(ph);
+        if (elBadge) {
+            elBadge.textContent = '● ' + s.texto;
+            elBadge.className = 'badge ' + s.classe;
+        }
+    });
+}
+</script>
+
+</body>
+</html>
+
