@@ -1,0 +1,1846 @@
+/* ================= RESET ================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #02172d;
+    color: white;
+}
+
+
+/* ================= HEADER ================= */
+
+header {
+    
+    width: 100%;
+    height: 78px;
+
+    padding: 0 6%;
+
+    display: flex;
+    align-items: center;
+     justify-content: space-between;
+
+    background: #011326;
+
+    border-bottom: 1px solid rgba(0, 174, 255, 0.2);
+}
+
+
+/* LOGO */
+
+.logo {
+     font-size:30px;
+    font-weight:700;
+    color:#fff
+}
+
+.logo i {
+    color: #00bfff;
+
+    font-size: 35px;
+
+    filter: drop-shadow(0 0 8px rgba(0, 191, 255, .7));
+}
+
+.logo b {
+    color: #00bfff;
+}
+
+
+/* MENU */
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+nav a {
+    position: relative;
+
+    color: #dce9f5;
+
+    text-decoration: none;
+
+    font-size: 19px;
+
+    transition: .3s;
+}
+
+nav a:hover {
+    color: #00cfff;
+}
+
+
+/* ITEM ATIVO */
+
+nav a.ativo {
+    color: #00cfff;
+}
+
+nav a.ativo::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -10px;
+
+    width: 100%;
+    height: 2px;
+
+    background: #00cfff;
+
+    box-shadow: 0 0 8px #00cfff;
+}
+
+
+/* BOTÃO ENTRAR */
+
+.btn-primary {
+    padding: 11px 25px;
+
+    border: 1px solid #00bfff;
+
+    border-radius:  18px;
+
+    color: white !important;
+
+    box-shadow:
+        0 0 8px rgba(0, 191, 255, .15);
+
+    transition: .3s;
+}
+
+.btn-primary i {
+    margin-left: 8px;
+    color: #00cfff;
+}
+
+.btn-primary:hover {
+    background: rgba(0, 191, 255, .1);
+
+    box-shadow:
+        0 0 15px rgba(0, 191, 255, .3);
+}
+
+
+/* ================= HERO ================= */
+
+.hero {
+    position: relative;
+
+    width: 100%;
+    height: 390px;
+
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            rgba(0, 19, 39, .75),
+            rgba(1, 27, 51, .95)
+        ),
+        url("img/aguacaindo.png");
+
+    background-size: cover;
+    background-position: center;
+}
+
+
+/* ONDA INFERIOR */
+
+.hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 110%;
+    height: 130px;
+
+    bottom: -80px;
+    left: -5%;
+
+    background: #02172d;
+
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+
+/* TEXTO */
+
+.hero-text {
+    position: relative;
+    z-index: 2;
+
+    max-width: 700px;
+}
+
+.hero-text h1 {
+    font-size: 55px;
+    font-weight: 600;
+}
+
+.hero-text h1 span {
+    color: #00cfff;
+
+    text-shadow:
+        0 0 12px rgba(0, 207, 255, .4);
+}
+
+
+.linha {
+    width: 100px;
+    height: 4px;
+
+    margin: 15px auto 20px;
+
+    border-radius: 20px;
+
+    background: linear-gradient(
+        90deg,
+        #009dff,
+        #67d8ff
+    );
+
+    box-shadow:
+        0 0 12px rgba(72, 180, 255, .5);
+}
+
+
+.hero-text p {
+    font-size: 23px;
+    margin-bottom: 8px;
+}
+
+.hero-text small {
+    color: #b9c9d8;
+    font-size: 15px;
+}
+
+
+/* ÍCONE */
+
+.hero-icone {
+    position: absolute;
+
+    right: 12%;
+    top: 100px;
+
+    width: 100px;
+    height: 100px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #00bfff;
+
+    border-radius: 50%;
+
+    color: #00cfff;
+
+    font-size: 38px;
+
+    box-shadow:
+        0 0 15px rgba(0, 191, 255, .3),
+        inset 0 0 20px rgba(0, 191, 255, .08);
+}
+
+
+/* ================= ÁREA PRINCIPAL ================= */
+
+.contato-principal {
+    width: 90%;
+    max-width: 1200px;
+
+    margin: 70px auto;
+
+    display: grid;
+
+    grid-template-columns: 1.1fr .9fr;
+
+    gap: 30px;
+}
+
+
+/* ================= FORMULÁRIO ================= */
+
+.card-formulario {
+    padding: 35px;
+
+    background: #031d38;
+
+    border: 1px solid rgba(0, 174, 255, .65);
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 0 12px rgba(0, 157, 255, .12),
+        inset 0 0 25px rgba(0, 157, 255, .03);
+}
+
+
+/* TÍTULO */
+
+.titulo-card {
+    display: flex;
+
+    gap: 18px;
+
+    margin-bottom: 30px;
+}
+
+.icone-titulo {
+    min-width: 55px;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #00bfff;
+
+    border-radius: 50%;
+
+    color: #00cfff;
+
+    font-size: 23px;
+
+    box-shadow:
+        0 0 10px rgba(0, 191, 255, .35);
+}
+
+.titulo-card h2 {
+    font-size: 22px;
+}
+
+.titulo-card p {
+    margin-top: 5px;
+
+    color: #9fb3c7;
+
+    font-size: 13px;
+}
+
+
+/* CAMPOS */
+
+.campo {
+    margin-bottom: 18px;
+}
+
+.campo label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #dceaf5;
+
+    font-size: 14px;
+}
+
+
+/* INPUT */
+
+.input-box {
+    display: flex;
+    align-items: center;
+
+    height: 50px;
+
+    padding: 0 15px;
+
+    border: 1px solid rgba(0, 174, 255, .4);
+
+    border-radius: 9px;
+
+    background: #02182f;
+
+    transition: .3s;
+}
+
+.input-box i {
+    color: #00bfff;
+
+    margin-right: 12px;
+}
+
+.input-box:focus-within {
+    border-color: #00cfff;
+
+    box-shadow:
+        0 0 10px rgba(0, 191, 255, .2);
+}
+
+.input-box input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-family: 'Poppins';
+}
+
+.input-box input::placeholder {
+    color: #70879c;
+}
+
+
+/* TEXTAREA */
+
+.textarea-box {
+    display: flex;
+    align-items: flex-start;
+
+    padding: 15px;
+
+    height: 130px;
+
+    border: 1px solid rgba(0, 174, 255, .4);
+
+    border-radius: 9px;
+
+    background: #02182f;
+}
+
+.textarea-box i {
+    color: #00bfff;
+
+    margin-right: 12px;
+}
+
+.textarea-box textarea {
+    width: 100%;
+    height: 100%;
+
+    resize: none;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-family: 'Poppins';
+}
+
+.textarea-box textarea::placeholder {
+    color: #70879c;
+}
+
+
+/* BOTÃO */
+
+.btn-enviar {
+    width: 100%;
+
+    height: 52px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: linear-gradient(
+        90deg,
+        #008ed4,
+        #00bfff
+    );
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.btn-enviar i {
+    margin-right: 8px;
+}
+
+.btn-enviar:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 20px rgba(0, 191, 255, .35);
+}
+
+
+/* SEGURANÇA */
+
+.seguranca {
+    text-align: center;
+
+    margin-top: 18px;
+
+    color: #7890a5;
+
+    font-size: 12px;
+}
+
+.seguranca i {
+    color: #00bfff;
+
+    margin-right: 5px;
+}
+
+
+/* ================= OUTRAS FORMAS ================= */
+
+.outras-formas {
+    padding: 35px;
+
+    background: #031d38;
+
+    border: 1px solid rgba(0, 174, 255, .65);
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 0 12px rgba(0, 157, 255, .12),
+        inset 0 0 25px rgba(0, 157, 255, .03);
+}
+
+
+.titulo-outras {
+    margin-bottom: 25px;
+}
+
+.titulo-outras h2 {
+    font-size: 24px;
+}
+
+.titulo-outras p {
+    color: #8fa7bb;
+
+    font-size: 13px;
+
+    margin-top: 5px;
+}
+
+
+/* ITEM DE CONTATO */
+
+.contato-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 20px 0;
+
+    border-bottom: 1px solid rgba(0, 174, 255, .18);
+}
+
+.contato-item:last-of-type {
+    border-bottom: none;
+}
+
+
+/* ÍCONE */
+
+.icone-contato {
+    min-width: 58px;
+
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #00bfff;
+
+    border-radius: 50%;
+
+    color: #00cfff;
+
+    font-size: 22px;
+
+    box-shadow:
+        0 0 10px rgba(0, 191, 255, .3),
+        inset 0 0 12px rgba(0, 191, 255, .05);
+}
+
+
+/* INFORMAÇÕES */
+
+.info-contato h3 {
+    color: #00cfff;
+
+    font-size: 16px;
+
+    margin-bottom: 3px;
+}
+
+.info-contato p {
+    color: white;
+
+    font-size: 14px;
+}
+
+.info-contato span {
+    display: block;
+
+    color: #8096a9;
+
+    font-size: 11px;
+
+    margin-top: 3px;
+}
+
+
+/* ================= REDES ================= */
+
+.redes {
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid rgba(0, 174, 255, .18);
+}
+
+.redes h3 {
+    font-size: 18px;
+}
+
+.redes p {
+    color: #8fa7bb;
+
+    font-size: 13px;
+
+    margin: 4px 0 15px;
+}
+
+.redes-icons {
+    display: flex;
+
+    gap: 12px;
+}
+
+.redes-icons a {
+    width: 43px;
+    height: 43px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #00bfff;
+
+    border-radius: 50%;
+
+    color: #00cfff;
+
+    text-decoration: none;
+
+    transition: .3s;
+}
+
+.redes-icons a:hover {
+    background: #00bfff;
+
+    color: #02172d;
+
+    box-shadow:
+        0 0 15px rgba(0, 191, 255, .5);
+}
+
+
+/* ================= OPINIÃO ================= */
+
+.opiniao {
+    width: 90%;
+    max-width: 1100px;
+
+    margin: 0 auto 70px;
+
+    padding: 30px 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+
+    background:
+        linear-gradient(
+            100deg,
+            #05294a,
+            #031d38
+        );
+
+    border: 1px solid rgba(0, 174, 255, .5);
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 0 15px rgba(0, 157, 255, .08);
+}
+
+.gota-opiniao {
+    min-width: 75px;
+
+    width: 75px;
+    height: 75px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #00bfff;
+
+    border-radius: 50%;
+
+    color: #00cfff;
+
+    font-size: 30px;
+
+    box-shadow:
+        0 0 15px rgba(0, 191, 255, .3);
+}
+
+.opiniao span {
+    color: #00cfff;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+.opiniao h2 {
+    font-size: 23px;
+
+    margin: 4px 0;
+}
+
+.opiniao p {
+    color: #a3b7c9;
+
+    font-size: 13px;
+
+    max-width: 700px;
+}
+
+
+/* ================= FOOTER ================= */
+
+footer {
+    padding: 50px 7%;
+
+    display: grid;
+
+    grid-template-columns: 1.5fr 1fr 1fr 1.3fr;
+
+    gap: 50px;
+
+    background: #011326;
+
+    border-top: 1px solid rgba(0, 174, 255, .15);
+}
+
+
+.footer-logo .logo {
+    font-size: 25px;
+}
+
+.footer-logo p {
+    max-width: 300px;
+
+    color: #8298aa;
+
+    font-size: 12px;
+
+    line-height: 1.7;
+
+    margin-top: 15px;
+}
+
+
+.footer-coluna {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.footer-coluna h3 {
+    font-size: 15px;
+
+    margin-bottom: 8px;
+}
+
+.footer-coluna a,
+.footer-coluna p {
+    color: #8197a9;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    transition: .3s;
+}
+
+.footer-coluna a:hover {
+    color: #00cfff;
+}
+
+.footer-coluna i {
+    color: #00bfff;
+
+    margin-right: 7px;
+}
+
+
+/* COPYRIGHT */
+
+.copyright {
+    padding: 18px;
+
+    text-align: center;
+
+    background: #011326;
+
+    border-top: 1px solid rgba(0, 174, 255, .1);
+
+    color: #61798c;
+
+    font-size: 11px;
+}
+
+
+/* ================= RESPONSIVO ================= */
+
+@media (max-width: 900px) {
+
+    header {
+        padding: 0 4%;
+    }
+
+    nav {
+        gap: 20px;
+    }
+
+    .hero-icone {
+        display: none;
+    }
+
+    .contato-principal {
+        grid-template-columns: 1fr;
+    }
+
+    footer {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    header {
+        height: auto;
+
+        padding: 20px;
+
+        flex-direction: column;
+
+        gap: 20px;
+    }
+
+    nav {
+        gap: 15px;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+    .hero {
+        height: 330px;
+    }
+
+    .hero-text h1 {
+        font-size: 38px;
+    }
+
+    .hero-text p {
+        font-size: 18px;
+    }
+
+    .contato-principal {
+        width: 94%;
+    }
+
+    .card-formulario,
+    .outras-formas {
+        padding: 25px;
+    }
+
+    .opiniao {
+        flex-direction: column;
+
+        text-align: center;
+
+        padding: 30px 25px;
+    }
+
+    footer {
+        grid-template-columns: 1fr;
+
+        text-align: center;
+    }
+
+    .footer-logo p {
+        margin: 15px auto;
+    }
+
+}
+
+/* =====================================================
+   PAINEL DE ACESSIBILIDADE - AQUA TRACK
+===================================================== */
+
+
+/* BOTÃO FLUTUANTE */
+
+.acessibilidade-btn {
+
+    position: fixed;
+
+    right: 25px;
+    bottom: 65px;
+
+    width: 58px;
+    height: 58px;
+
+    border-radius: 50%;
+
+    border: 2px solid #00cfff;
+
+    background: #011326;
+
+    color: #00cfff;
+
+    font-size: 26px;
+
+    cursor: pointer;
+
+    z-index: 9999;
+
+    box-shadow:
+        0 0 15px rgba(0, 191, 255, .35);
+
+    transition: .3s;
+
+}
+
+
+.acessibilidade-btn:hover {
+
+    transform: scale(1.08);
+
+    background: #00cfff;
+
+    color: #011326;
+
+    box-shadow:
+        0 0 25px rgba(0, 191, 255, .55);
+
+}
+
+
+/* PAINEL */
+
+.painel-acessibilidade {
+
+    position: fixed;
+
+    right: 25px;
+    bottom: 135px;
+
+    width: 330px;
+
+    background: #011326;
+
+    border: 1px solid rgba(0, 191, 255, .35);
+
+    border-radius: 20px;
+
+    padding: 20px;
+
+    z-index: 9998;
+
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, .45);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform: translateY(15px) scale(.97);
+
+    transition: .3s;
+
+}
+
+
+/* PAINEL ABERTO */
+
+.painel-acessibilidade.aberto {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform: translateY(0) scale(1);
+
+}
+
+
+/* CABEÇALHO */
+
+.acessibilidade-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding-bottom: 15px;
+
+    border-bottom: 1px solid rgba(255,255,255,.12);
+
+    margin-bottom: 15px;
+
+}
+
+
+.acessibilidade-header div {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.acessibilidade-header i {
+
+    color: #00cfff;
+
+    font-size: 21px;
+
+}
+
+
+.acessibilidade-header span {
+
+    color: #fff;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+}
+
+
+.acessibilidade-header button {
+
+    border: none;
+
+    background: transparent;
+
+    color: #b9c9d8;
+
+    font-size: 19px;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+}
+
+
+.acessibilidade-header button:hover {
+
+    color: #00cfff;
+
+    transform: rotate(90deg);
+
+}
+
+
+/* SEÇÕES */
+
+.acessibilidade-secao {
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid rgba(255,255,255,.08);
+
+}
+
+
+.acessibilidade-secao h3 {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    color: #fff;
+
+    font-size: 15px;
+
+    margin-bottom: 12px;
+
+}
+
+
+.acessibilidade-secao h3 i {
+
+    color: #00cfff;
+
+}
+
+
+/* BOTÕES DE LEITURA */
+
+.botoes-leitura {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr 1fr;
+
+    gap: 7px;
+
+}
+
+
+.botoes-leitura button {
+
+    padding: 9px 5px;
+
+    border: 1px solid rgba(0, 191, 255, .35);
+
+    border-radius: 10px;
+
+    background: rgba(0, 191, 255, .06);
+
+    color: #dce9f5;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+}
+
+
+.botoes-leitura button:hover {
+
+    background: #00cfff;
+
+    color: #011326;
+
+}
+
+/* TAMANHO DO TEXTO */
+
+.tamanho-texto {
+
+    display: flex;
+
+    gap: 8px;
+
+}
+
+
+.tamanho-texto button {
+
+    flex: 1;
+
+    height: 40px;
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(0, 191, 255, .35);
+
+    background: rgba(0, 191, 255, .06);
+
+    color: #fff;
+
+    cursor: pointer;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-weight: 600;
+
+    transition: .3s;
+
+}
+
+
+.tamanho-texto button:first-child {
+
+    font-size: 13px;
+
+}
+
+
+.tamanho-texto button:nth-child(2) {
+
+    font-size: 16px;
+
+}
+
+
+.tamanho-texto button:last-child {
+
+    font-size: 20px;
+
+}
+
+
+.tamanho-texto button:hover {
+
+    background: #00cfff;
+
+    color: #011326;
+
+}
+
+
+/* TEMAS */
+
+.temas {
+
+    display: flex;
+
+    gap: 8px;
+
+}
+
+
+.temas button {
+
+    flex: 1;
+
+    padding: 10px;
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(0, 191, 255, .35);
+
+    background: rgba(0, 191, 255, .06);
+
+    color: #fff;
+
+    font-family: 'Poppins', sans-serif;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+}
+
+
+.temas button:hover {
+
+    background: #00cfff;
+
+    color: #011326;
+
+}
+
+
+/* RESTAURAR */
+
+.restaurar-acessibilidade {
+
+    width: 100%;
+
+    margin-top: 15px;
+
+    padding: 11px;
+
+    border: 1px solid rgba(255,255,255,.2);
+
+    border-radius: 10px;
+
+    background: rgba(255,255,255,.05);
+
+    color: #dce9f5;
+
+    font-family: 'Poppins', sans-serif;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+}
+
+
+.restaurar-acessibilidade:hover {
+
+    background: rgba(0, 191, 255, .12);
+
+    border-color: #00cfff;
+
+    color: #00cfff;
+
+}
+
+
+/* =====================================================
+   TEMA CLARO
+===================================================== */
+
+body.tema-claro {
+
+    background: #f4fbff;
+
+    color: #102a43;
+
+}
+
+
+/* Header */
+
+body.tema-claro header {
+
+    background: #ffffff;
+
+    border-bottom: 1px solid rgba(0, 174, 255, .25);
+
+}
+
+
+body.tema-claro .logo {
+
+    color: #011326;
+
+}
+
+
+body.tema-claro nav a {
+
+    color: #29465f;
+
+}
+
+
+body.tema-claro nav a:hover,
+
+body.tema-claro nav a.ativo {
+
+    color: #008dcc;
+
+}
+
+
+/* Botão */
+
+body.tema-claro .acessibilidade-btn {
+
+    background: #ffffff;
+
+    color: #008dcc;
+
+}
+
+
+/* Painel */
+
+body.tema-claro .painel-acessibilidade {
+
+    background: #ffffff;
+
+    border-color: rgba(0, 174, 255, .35);
+
+}
+
+
+body.tema-claro .acessibilidade-header span,
+
+body.tema-claro .acessibilidade-secao h3 {
+
+    color: #102a43;
+
+}
+
+
+body.tema-claro .acessibilidade-header button {
+
+    color: #536b7d;
+
+}
+
+
+body.tema-claro .botoes-leitura button,
+
+body.tema-claro .tamanho-texto button,
+
+body.tema-claro .temas button {
+
+    color: #102a43;
+
+    background: #f1f9fd;
+
+}
+
+
+body.tema-claro .restaurar-acessibilidade {
+
+    color: #29465f;
+
+    background: #f1f9fd;
+
+}
+
+
+/* =====================================================
+   RESPONSIVIDADE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .painel-acessibilidade {
+
+        right: 15px;
+
+        left: 15px;
+
+        bottom: 125px;
+
+        width: auto;
+
+    }
+
+
+    .acessibilidade-btn {
+
+        right: 18px;
+
+        bottom: 60px;
+
+    }
+
+}
+/* =====================================================
+   ACESSIBILIDADE - TAMANHO DO TEXTO
+===================================================== */
+
+/* AUMENTAR - NÍVEL 1 */
+
+body.texto-grande-1 .hero-text h1 {
+    font-size: 48px;
+}
+
+body.texto-grande-1 .hero-text p {
+    font-size: 23px;
+}
+
+body.texto-grande-1 .hero-text small {
+    font-size: 18px;
+}
+
+body.texto-grande-1 .card-formulario h2,
+body.texto-grande-1 .outras-formas h2 {
+    font-size: 28px;
+}
+
+body.texto-grande-1 .card-formulario p,
+body.texto-grande-1 .outras-formas p {
+    font-size: 17px;
+}
+
+body.texto-grande-1 label {
+    font-size: 17px;
+}
+
+body.texto-grande-1 input,
+body.texto-grande-1 textarea {
+    font-size: 17px;
+}
+
+body.texto-grande-1 .info-contato h3 {
+    font-size: 19px;
+}
+
+body.texto-grande-1 .info-contato p {
+    font-size: 17px;
+}
+
+body.texto-grande-1 .info-contato span {
+    font-size: 15px;
+}
+
+body.texto-grande-1 .redes h3 {
+    font-size: 19px;
+}
+
+body.texto-grande-1 .redes p {
+    font-size: 17px;
+}
+
+body.texto-grande-1 .btn-enviar {
+    font-size: 17px;
+}
+
+body.texto-grande-1 .seguranca {
+    font-size: 15px;
+}
+
+body.texto-grande-1 .opiniao span {
+    font-size: 16px;
+}
+
+body.texto-grande-1 .opiniao h2 {
+    font-size: 29px;
+}
+
+body.texto-grande-1 .opiniao p {
+    font-size: 18px;
+}
+
+
+/* =====================================================
+   AUMENTAR - NÍVEL 2
+===================================================== */
+
+body.texto-grande-2 .hero-text h1 {
+    font-size: 55px;
+}
+
+body.texto-grande-2 .hero-text p {
+    font-size: 26px;
+}
+
+body.texto-grande-2 .hero-text small {
+    font-size: 21px;
+}
+
+body.texto-grande-2 .card-formulario h2,
+body.texto-grande-2 .outras-formas h2 {
+    font-size: 31px;
+}
+
+body.texto-grande-2 .card-formulario p,
+body.texto-grande-2 .outras-formas p {
+    font-size: 19px;
+}
+
+body.texto-grande-2 label {
+    font-size: 19px;
+}
+
+body.texto-grande-2 input,
+body.texto-grande-2 textarea {
+    font-size: 19px;
+}
+
+body.texto-grande-2 .info-contato h3 {
+    font-size: 21px;
+}
+
+body.texto-grande-2 .info-contato p {
+    font-size: 19px;
+}
+
+body.texto-grande-2 .info-contato span {
+    font-size: 17px;
+}
+
+body.texto-grande-2 .redes h3 {
+    font-size: 21px;
+}
+
+body.texto-grande-2 .redes p {
+    font-size: 19px;
+}
+
+body.texto-grande-2 .btn-enviar {
+    font-size: 19px;
+}
+
+body.texto-grande-2 .seguranca {
+    font-size: 17px;
+}
+
+body.texto-grande-2 .opiniao span {
+    font-size: 18px;
+}
+
+body.texto-grande-2 .opiniao h2 {
+    font-size: 32px;
+}
+
+body.texto-grande-2 .opiniao p {
+    font-size: 20px;
+}
+
+
+/* =====================================================
+   AUMENTAR - NÍVEL 3
+===================================================== */
+
+body.texto-grande-3 .hero-text h1 {
+    font-size: 62px;
+}
+
+body.texto-grande-3 .hero-text p {
+    font-size: 29px;
+}
+
+body.texto-grande-3 .hero-text small {
+    font-size: 24px;
+}
+
+body.texto-grande-3 .card-formulario h2,
+body.texto-grande-3 .outras-formas h2 {
+    font-size: 35px;
+}
+
+body.texto-grande-3 .card-formulario p,
+body.texto-grande-3 .outras-formas p {
+    font-size: 21px;
+}
+
+body.texto-grande-3 label {
+    font-size: 21px;
+}
+
+body.texto-grande-3 input,
+body.texto-grande-3 textarea {
+    font-size: 21px;
+}
+
+body.texto-grande-3 .info-contato h3 {
+    font-size: 23px;
+}
+
+body.texto-grande-3 .info-contato p {
+    font-size: 21px;
+}
+
+body.texto-grande-3 .info-contato span {
+    font-size: 19px;
+}
+
+body.texto-grande-3 .redes h3 {
+    font-size: 23px;
+}
+
+body.texto-grande-3 .redes p {
+    font-size: 21px;
+}
+
+body.texto-grande-3 .btn-enviar {
+    font-size: 21px;
+}
+
+body.texto-grande-3 .seguranca {
+    font-size: 19px;
+}
+
+body.texto-grande-3 .opiniao span {
+    font-size: 20px;
+}
+
+body.texto-grande-3 .opiniao h2 {
+    font-size: 36px;
+}
+
+body.texto-grande-3 .opiniao p {
+    font-size: 22px;
+}
+
+
+/* =====================================================
+   DIMINUIR - NÍVEL 1
+===================================================== */
+
+body.texto-pequeno-1 .hero-text h1 {
+    font-size: 38px;
+}
+
+body.texto-pequeno-1 .hero-text p {
+    font-size: 19px;
+}
+
+body.texto-pequeno-1 .hero-text small {
+    font-size: 14px;
+}
+
+body.texto-pequeno-1 .card-formulario h2,
+body.texto-pequeno-1 .outras-formas h2 {
+    font-size: 23px;
+}
+
+body.texto-pequeno-1 .card-formulario p,
+body.texto-pequeno-1 .outras-formas p {
+    font-size: 14px;
+}
+
+body.texto-pequeno-1 label {
+    font-size: 14px;
+}
+
+body.texto-pequeno-1 input,
+body.texto-pequeno-1 textarea {
+    font-size: 14px;
+}
+
+body.texto-pequeno-1 .info-contato h3 {
+    font-size: 16px;
+}
+
+body.texto-pequeno-1 .info-contato p {
+    font-size: 14px;
+}
+
+body.texto-pequeno-1 .info-contato span {
+    font-size: 12px;
+}
+
+body.texto-pequeno-1 .redes h3 {
+    font-size: 16px;
+}
+
+body.texto-pequeno-1 .redes p {
+    font-size: 14px;
+}
+
+body.texto-pequeno-1 .btn-enviar {
+    font-size: 14px;
+}
+
+body.texto-pequeno-1 .seguranca {
+    font-size: 12px;
+}
+
+body.texto-pequeno-1 .opiniao span {
+    font-size: 13px;
+}
+
+body.texto-pequeno-1 .opiniao h2 {
+    font-size: 24px;
+}
+
+body.texto-pequeno-1 .opiniao p {
+    font-size: 15px;
+}
+
+
+/* =====================================================
+   DIMINUIR - NÍVEL 2
+===================================================== */
+
+body.texto-pequeno-2 .hero-text h1 {
+    font-size: 33px;
+}
+
+body.texto-pequeno-2 .hero-text p {
+    font-size: 17px;
+}
+
+body.texto-pequeno-2 .hero-text small {
+    font-size: 12px;
+}
+
+body.texto-pequeno-2 .card-formulario h2,
+body.texto-pequeno-2 .outras-formas h2 {
+    font-size: 20px;
+}
+
+body.texto-pequeno-2 .card-formulario p,
+body.texto-pequeno-2 .outras-formas p {
+    font-size: 12px;
+}
+
+body.texto-pequeno-2 label {
+    font-size: 12px;
+}
+
+body.texto-pequeno-2 input,
+body.texto-pequeno-2 textarea {
+    font-size: 12px;
+}
+
+body.texto-pequeno-2 .info-contato h3 {
+    font-size: 14px;
+}
+
+body.texto-pequeno-2 .info-contato p {
+    font-size: 12px;
+}
+
+body.texto-pequeno-2 .info-contato span {
+    font-size: 10px;
+}
+
+body.texto-pequeno-2 .redes h3 {
+    font-size: 14px;
+}
+
+body.texto-pequeno-2 .redes p {
+    font-size: 12px;
+}
+
+body.texto-pequeno-2 .btn-enviar {
+    font-size: 12px;
+}
+
+body.texto-pequeno-2 .seguranca {
+    font-size: 10px;
+}
+
+body.texto-pequeno-2 .opiniao span {
+    font-size: 11px;
+}
+
+body.texto-pequeno-2 .opiniao h2 {
+    font-size: 21px;
+}
+
+body.texto-pequeno-2 .opiniao p {
+    font-size: 13px;
+}
