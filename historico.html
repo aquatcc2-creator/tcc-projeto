@@ -135,20 +135,27 @@ if (db) {
         }
 
         dados.reverse().forEach(d => {
-            const ph = parseFloat(d.ph);
-            const temp = parseFloat(d.temperatura);
+            const ph = Number(d.ph);
+            const temperaturaValida =
+                d.temperatura !== null &&
+                d.temperatura !== undefined &&
+                d.temperatura !== "" &&
+                Number.isFinite(Number(d.temperatura));
+            const temp = temperaturaValida ? Number(d.temperatura) : null;
             const sPH = statusPH(ph);
-            const sTemp = statusTemp(temp);
-            const dt = formatarData(d.timestamp);
+            const sTemp = temp === null
+                ? { texto: "Sem leitura", classe: "badge-neutral" }
+                : statusTemp(temp);
+            const dt = formatarData(Number(d.timestamp) || Date.now());
 
             const tr = document.createElement("tr");
             tr.innerHTML = `
                 <td>${dt.data} • ${dt.hora}</td>
-                <td><strong style="color: #fff; font-size: 15px;">${ph.toFixed(1).replace('.', ',')}</strong></td>
+                <td><strong style="color: #fff; font-size: 15px;">${Number.isFinite(ph) ? ph.toFixed(1).replace('.', ',') : '—'}</strong></td>
                 <td><span class="badge ${sPH.classe}">● ${sPH.texto}</span></td>
-                <td>${temp.toFixed(1).replace('.', ',')} °C</td>
+                <td>${temp === null ? '—' : temp.toFixed(1).replace('.', ',') + ' °C'}</td>
                 <td><span class="badge ${sTemp.classe}">● ${sTemp.texto}</span></td>
-                <td><span class="connected">● Online</span></td>
+                <td><span class="${d.sensor_online === false ? 'disconnected' : 'connected'}">● ${d.sensor_online === false ? 'Offline' : 'Online'}</span></td>
             `;
             corpo.appendChild(tr);
         });
