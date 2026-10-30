@@ -121,40 +121,45 @@
 verificarAutenticacao(true);
 
 if (db) {
-    db.ref('/medicoes/historico').on('value', snap => {
+    db.ref('/medicoes/historico').on('value', async snap => {
         const corpo = document.getElementById("tabelaHistoricoCompleto");
         if (!corpo) return;
 
-        corpo.innerHTML = '';
-        const dados = [];
-        snap.forEach(child => dados.push(child.val()));
+        try {
+            const dados = [];
+            snap.forEach(child => dados.push(child.val()));
 
-        if (dados.length === 0) {
-            // Compatibilidade: se ainda não há histórico, mostrar a medição atual
-            // como uma primeira linha. As próximas leituras precisam ser gravadas
-            // pelo ESP32 em /medicoes/historico para formar o histórico completo.
-            db.ref('/medicoes/atual').once('value').then(atualSnap => {
-                if (atualSnap.exists()) {
-                    const atual = atualSnap.val();
-                    atual.sensor_online = atual.sensor_online ?? true;
-                    dados.push(atual);
-                    renderizarHistorico(dados, corpo);
-                } else {
-                    corpo.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color: #7fa9c4;">Nenhuma medição registrada ainda.</td></tr>';
-                }
-            }).catch(error => {
-                console.error('[AquaTrack] Erro ao carregar medição atual:', error);
-                corpo.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color: #7fa9c4;">Não foi possível carregar as medições.</td></tr>';
-            });
-            return;
+            // Inclui a leitura atual mesmo quando já existem registros antigos.
+            const atualSnap = await db.ref('/medicoes/atual').once('value');
+            if (atualSnap.exists()) {
+                const atual = atualSnap.val();
+                atual.sensor_online = atual.sensor_online ?? true;
+
+                // Evita duplicar a leitura atual caso ela já esteja no histórico.
+                const timestampAtual = Number(atual.timestamp);
+                const jaExiste = dados.some(d =>
+                    Number(d.timestamp) === timestampAtual &&
+                    Number(d.ph) === Number(atual.ph)
+                );
+                if (!jaExiste) dados.push(atual);
+            }
+
+            renderizarHistorico(dados, corpo);
+        } catch (error) {
+            console.error('[AquaTrack] Erro ao carregar histórico:', error);
+            corpo.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color: #7fa9c4;">Não foi possível carregar as medições.</td></tr>';
         }
-
-        renderizarHistorico(dados, corpo);
     });
 
     function renderizarHistorico(dados, corpo) {
         corpo.innerHTML = '';
-        dados.reverse().forEach(d => {
+        if (!dados.length) {
+            corpo.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color: #7fa9c4;">Nenhuma medição registrada ainda.</td></tr>';
+            return;
+        }
+
+        dados.sort((a, b) => Number(b.timestamp || 0) - Number(a.timestamp || 0));
+        dados.forEach(d => {
             const ph = Number(d.ph);
             const temperaturaValida =
                 d.temperatura !== null &&
