@@ -130,10 +130,30 @@ if (db) {
         snap.forEach(child => dados.push(child.val()));
 
         if (dados.length === 0) {
-            corpo.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color: #7fa9c4;">Nenhuma medição registrada ainda.</td></tr>';
+            // Compatibilidade: se ainda não há histórico, mostrar a medição atual
+            // como uma primeira linha. As próximas leituras precisam ser gravadas
+            // pelo ESP32 em /medicoes/historico para formar o histórico completo.
+            db.ref('/medicoes/atual').once('value').then(atualSnap => {
+                if (atualSnap.exists()) {
+                    const atual = atualSnap.val();
+                    atual.sensor_online = atual.sensor_online ?? true;
+                    dados.push(atual);
+                    renderizarHistorico(dados, corpo);
+                } else {
+                    corpo.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color: #7fa9c4;">Nenhuma medição registrada ainda.</td></tr>';
+                }
+            }).catch(error => {
+                console.error('[AquaTrack] Erro ao carregar medição atual:', error);
+                corpo.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px; color: #7fa9c4;">Não foi possível carregar as medições.</td></tr>';
+            });
             return;
         }
 
+        renderizarHistorico(dados, corpo);
+    });
+
+    function renderizarHistorico(dados, corpo) {
+        corpo.innerHTML = '';
         dados.reverse().forEach(d => {
             const ph = Number(d.ph);
             const temperaturaValida =
@@ -159,7 +179,7 @@ if (db) {
             `;
             corpo.appendChild(tr);
         });
-    });
+    }
 }
 </script>
 </body>
