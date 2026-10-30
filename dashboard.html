@@ -586,15 +586,17 @@ if (typeof db === "undefined" || db === null) {
             }
 
 
-            if (Number.isNaN(temperatura)) {
+            // A temperatura ainda não é fornecida pelo hardware.
+            // Não bloquear a atualização do pH por causa disso.
+            const temperaturaValida =
+                dado.temperatura !== null &&
+                dado.temperatura !== undefined &&
+                dado.temperatura !== "" &&
+                Number.isFinite(Number(dado.temperatura));
 
-                console.error(
-                    "[AquaTrack] ERRO: temperatura inválida:",
-                    dado.temperatura
-                );
-
-                return;
-            }
+            const temperaturaExibida = temperaturaValida
+                ? Number(dado.temperatura)
+                : null;
 
 
             console.log(
@@ -646,14 +648,15 @@ if (typeof db === "undefined" || db === null) {
 
             set(
                 "fb-temp-valor",
-                temperatura
-                    .toFixed(1)
-                    .replace(".", ",") + " °C"
+                temperaturaExibida === null
+                    ? "—"
+                    : temperaturaExibida.toFixed(1).replace(".", ",") + " °C"
             );
 
 
-            const statusTemperatura =
-                statusTemp(temperatura);
+            const statusTemperatura = temperaturaExibida === null
+                ? { texto: "Sem leitura", classe: "badge-neutral", ideal: false }
+                : statusTemp(temperaturaExibida);
 
 
             const badgeTemperatura =
@@ -761,10 +764,9 @@ if (typeof db === "undefined" || db === null) {
 
             set(
                 "fb-ultima-temp",
-                temperatura
-                    .toFixed(1)
-                    .replace(".", ",") +
-                " °C"
+                temperaturaExibida === null
+                    ? "—"
+                    : temperaturaExibida.toFixed(1).replace(".", ",") + " °C"
             );
 
             set(
