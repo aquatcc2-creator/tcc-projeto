@@ -540,11 +540,18 @@
                     '<span>⏳</span> Entrando...';
 
 
-                auth
-                    .signInWithEmailAndPassword(
-                        email,
-                        senha
-                    )
+                // Evita deixar o botão preso em "Entrando..." caso
+                // a comunicação com o Firebase não responda.
+                const loginFirebase = auth.signInWithEmailAndPassword(email, senha);
+                const limiteTempo = new Promise((_, reject) => {
+                    setTimeout(() => {
+                        const erro = new Error("A autenticação demorou mais de 15 segundos.");
+                        erro.code = "auth/timeout";
+                        reject(erro);
+                    }, 15000);
+                });
+
+                Promise.race([loginFirebase, limiteTempo])
 
                     .then(() => {
 
@@ -601,7 +608,11 @@
                         } else if (
                             error.code === "auth/network-request-failed"
                         ) {
-                            txtErro.textContent = "Falha de conexão. Verifique sua internet e tente novamente.";
+                            txtErro.textContent = "Falha de conexão com o Firebase. Verifique sua internet e tente novamente.";
+                        } else if (
+                            error.code === "auth/timeout"
+                        ) {
+                            txtErro.textContent = "O Firebase não respondeu. Confira sua conexão e se o domínio do site está autorizado em Authentication → Settings → Authorized domains.";
                         } else {
                             txtErro.textContent = "Não foi possível entrar. Tente novamente.";
                             console.error("Erro de login:", error);
