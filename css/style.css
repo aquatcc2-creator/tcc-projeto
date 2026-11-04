@@ -1943,6 +1943,11 @@ header nav a.ativo {
     color: #35df9b;
 }
 
+.erro-login[hidden],
+.mensagem-sucesso[hidden] {
+    display: none !important;
+}
+
 .login-form .input-group {
     margin-bottom: 18px;
 }
