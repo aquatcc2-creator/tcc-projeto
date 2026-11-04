@@ -113,12 +113,19 @@
                     class="erro-login"
                     id="mensagemErro"
                     aria-live="polite"
+                    role="alert"
+                    hidden
                 >
 
                     <i class="fa-solid fa-circle-exclamation"></i>
 
                     <span id="textoErro"></span>
 
+                </div>
+
+                <div class="mensagem-sucesso" id="mensagemSucesso" role="status" aria-live="polite" hidden>
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span id="textoSucesso"></span>
                 </div>
 
 
@@ -523,9 +530,9 @@
                         .getElementById("btnLogin");
 
 
-                msgBox.className =
-                    "erro-login";
-
+                msgBox.hidden = true;
+                document.getElementById("mensagemSucesso").hidden = true;
+                txtErro.textContent = "";
 
                 btn.disabled = true;
 
@@ -554,9 +561,8 @@
                             '<span>↪</span> Entrar';
 
 
-                        msgBox.className =
-                            "erro-login";
-
+                        msgBox.hidden = false;
+                        txtErro.textContent = "";
 
                         if (
                             error.code ===
@@ -588,12 +594,17 @@
                             txtErro.textContent =
                                 "Muitas tentativas. Aguarde um momento.";
 
+                        } else if (
+                            error.code === "auth/user-disabled"
+                        ) {
+                            txtErro.textContent = "Esta conta foi desativada. Entre em contato com o responsável.";
+                        } else if (
+                            error.code === "auth/network-request-failed"
+                        ) {
+                            txtErro.textContent = "Falha de conexão. Verifique sua internet e tente novamente.";
                         } else {
-
-                            txtErro.textContent =
-                                "Erro ao fazer login: " +
-                                error.message;
-
+                            txtErro.textContent = "Não foi possível entrar. Tente novamente.";
+                            console.error("Erro de login:", error);
                         }
 
                     });
@@ -601,55 +612,50 @@
             });
 
 
-        // Recuperação de senha
-
+        // Recuperação de senha pelo Firebase Authentication
         document
             .getElementById("linkEsqueciSenha")
-            .addEventListener("click", function(e) {
-
+            .addEventListener("click", async function(e) {
                 e.preventDefault();
 
+                const email = document.getElementById("email").value.trim();
+                const msgErro = document.getElementById("mensagemErro");
+                const textoErro = document.getElementById("textoErro");
+                const msgSucesso = document.getElementById("mensagemSucesso");
+                const textoSucesso = document.getElementById("textoSucesso");
 
-                const email =
-                    document
-                        .getElementById("email")
-                        .value
-                        .trim();
-
+                msgErro.hidden = true;
+                msgSucesso.hidden = true;
+                textoErro.textContent = "";
+                textoSucesso.textContent = "";
 
                 if (!email) {
-
-                    alert(
-                        "Digite seu e-mail no campo acima para receber as instruções de recuperação."
-                    );
-
+                    msgErro.hidden = false;
+                    textoErro.textContent = "Digite seu e-mail no campo acima para receber o link de redefinição.";
+                    document.getElementById("email").focus();
                     return;
-
                 }
 
+                try {
+                    await auth.sendPasswordResetEmail(email);
+                    msgSucesso.hidden = false;
+                    textoSucesso.textContent = "Se houver uma conta cadastrada com esse e-mail, você receberá um link para redefinir sua senha. Verifique também a caixa de spam.";
+                } catch (err) {
+                    msgErro.hidden = false;
 
-                auth
-                    .sendPasswordResetEmail(email)
-
-                    .then(() => {
-
-                        alert(
-                            "E-mail de redefinição de senha enviado para: " +
-                            email
-                        );
-
-                    })
-
-                    .catch(err => {
-
-                        alert(
-                            "Erro ao enviar e-mail: " +
-                            err.message
-                        );
-
-                    });
-
+                    if (err.code === "auth/invalid-email") {
+                        textoErro.textContent = "O formato do e-mail está inválido. Confira o endereço digitado.";
+                    } else if (err.code === "auth/too-many-requests") {
+                        textoErro.textContent = "Muitas solicitações. Aguarde alguns minutos antes de tentar novamente.";
+                    } else if (err.code === "auth/network-request-failed") {
+                        textoErro.textContent = "Falha de conexão. Verifique sua internet e tente novamente.";
+                    } else {
+                        textoErro.textContent = "Não foi possível solicitar a redefinição agora. Confira as configurações do Firebase Authentication.";
+                        console.error("Erro ao recuperar senha:", err);
+                    }
+                }
             });
+
 
     </script>
 
