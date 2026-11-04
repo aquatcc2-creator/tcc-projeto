@@ -567,8 +567,12 @@ if (typeof db === "undefined" || db === null) {
             // -------------------------------------------------
 
             const timestamp =
-                Number(dado.timestamp) ||
-                Date.now();
+                Number(dado.timestamp) || 0;
+
+            // O ESP32 envia uma leitura a cada 5 segundos.
+            // Se a última leitura tiver mais de 20 segundos, considerar offline.
+            const leituraRecente =
+                timestamp > 0 && (Date.now() - timestamp) <= 20000;
 
 
             // -------------------------------------------------
@@ -682,9 +686,10 @@ if (typeof db === "undefined" || db === null) {
             // =================================================
 
             const sensorOnline =
-                dado.sensor_online === true ||
-                dado.sensor_online === 1 ||
-                dado.sensor_online === "true";
+                leituraRecente &&
+                (dado.sensor_online === true ||
+                 dado.sensor_online === 1 ||
+                 dado.sensor_online === "true");
 
 
             const sensorElemento =
