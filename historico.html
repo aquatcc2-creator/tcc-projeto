@@ -133,7 +133,8 @@ if (db) {
             const atualSnap = await db.ref('/medicoes/atual').once('value');
             if (atualSnap.exists()) {
                 const atual = atualSnap.val();
-                atual.sensor_online = atual.sensor_online ?? true;
+                // Esta é a última leitura armazenada, não necessariamente uma leitura ao vivo.
+                atual._leituraAtual = true;
 
                 // Evita duplicar a leitura atual caso ela já esteja no histórico.
                 const timestampAtual = Number(atual.timestamp);
@@ -171,7 +172,17 @@ if (db) {
             const sTemp = temp === null
                 ? { texto: "Sem leitura", classe: "badge-neutral" }
                 : statusTemp(temp);
-            const dt = formatarData(Number(d.timestamp) || Date.now());
+            const timestamp = Number(d.timestamp) || 0;
+            const dt = formatarData(timestamp || Date.now());
+            // O ESP32 envia a cada 5 segundos; após 20 segundos sem atualização,
+            // a última leitura armazenada deve ser considerada desatualizada.
+            const leituraRecente = timestamp > 0 && (Date.now() - timestamp) <= 20000;
+            const statusTexto = d._leituraAtual
+                ? (leituraRecente ? "Online" : "Offline — última leitura")
+                : "Registro salvo";
+            const statusClasse = d._leituraAtual
+                ? (leituraRecente ? "connected" : "disconnected")
+                : "connected";
 
             const tr = document.createElement("tr");
             tr.innerHTML = `
@@ -180,7 +191,7 @@ if (db) {
                 <td><span class="badge ${sPH.classe}">● ${sPH.texto}</span></td>
                 <td>${temp === null ? '—' : temp.toFixed(1).replace('.', ',') + ' °C'}</td>
                 <td><span class="badge ${sTemp.classe}">● ${sTemp.texto}</span></td>
-                <td><span class="${d.sensor_online === false ? 'disconnected' : 'connected'}">● ${d.sensor_online === false ? 'Offline' : 'Online'}</span></td>
+                <td><span class="${statusClasse}">● ${statusTexto}</span></td>
             `;
             corpo.appendChild(tr);
         });
