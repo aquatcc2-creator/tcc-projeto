@@ -1170,34 +1170,39 @@ if (typeof db === "undefined" || db === null) {
             );
 
 
-            if (
-                dadosHistoricoGlobal.length === 0
-            ) {
+            // Busca também a última medição, pois o ESP32 atualiza
+            // /medicoes/atual e pode ainda não gravar em /medicoes/historico.
+            db.ref("medicoes/atual").once("value")
+                .then(function(atualSnapshot) {
+                    if (atualSnapshot.exists()) {
+                        const atual = atualSnapshot.val();
+                        atual._leituraAtual = true;
 
-                console.warn(
-                    "[AquaTrack] Histórico vazio."
-                );
+                        const tsAtual = Number(atual.timestamp) || 0;
+                        const duplicada = dadosHistoricoGlobal.some(function(item) {
+                            return Number(item.timestamp) === tsAtual &&
+                                   Number(item.ph) === Number(atual.ph);
+                        });
 
-                return;
-            }
+                        if (!duplicada) {
+                            dadosHistoricoGlobal.push(atual);
+                        }
+                    }
 
+                    // Mais recentes primeiro na tabela/relatório.
+                    dadosHistoricoGlobal.sort(function(a, b) {
+                        return Number(b.timestamp || 0) - Number(a.timestamp || 0);
+                    });
 
-            // Atualiza tabela do relatório
+                    atualizarTabelaRelatorio(dadosHistoricoGlobal);
 
-            atualizarTabelaRelatorio(
-                dadosHistoricoGlobal
-            );
-
-
-            // Pega somente as últimas 7
-
-            const ultimos7 =
-                dadosHistoricoGlobal.slice(-7);
-
-
-            atualizarGraficoSVG(
-                ultimos7
-            );
+                    const ultimos7 = dadosHistoricoGlobal.slice(0, 7).reverse();
+                    atualizarGraficoSVG(ultimos7);
+                })
+                .catch(function(error) {
+                    console.error("[AquaTrack] Erro ao buscar medição atual para relatório:", error);
+                    atualizarTabelaRelatorio(dadosHistoricoGlobal);
+                });
         },
 
         function(error) {
@@ -1430,165 +1435,72 @@ function atualizarGraficoSVG(dados) {
 
 function atualizarTabelaRelatorio(dados) {
 
-    const corpo =
-        document.getElementById(
-            "tabelaRelatorioCorpo"
-        );
-
-
-    if (!corpo) {
-        return;
-    }
-
+    const corpo = document.getElementById("tabelaRelatorioCorpo");
+    if (!corpo) return;
 
     corpo.innerHTML = "";
 
-
     let somaPh = 0;
+    let quantidadePh = 0;
     let somaTemp = 0;
-    let quantidade = 0;
-
+    let quantidadeTemp = 0;
 
     dados
-        .slice(-15)
-        .reverse()
+        .slice()
+        .sort((a, b) => Number(b.timestamp || 0) - Number(a.timestamp || 0))
+        .slice(0, 15)
         .forEach(function(dado) {
+            const ph = Number(dado.ph);
+            if (!Number.isFinite(ph)) return;
 
-
-            const ph =
-                Number(dado.ph);
-
-
-            const temperatura =
-                Number(dado.temperatura);
-
-
-            if (
-                Number.isNaN(ph) ||
-                Number.isNaN(temperatura)
-            ) {
-
-                return;
-            }
-
+            const temperaturaValida =
+                dado.temperatura !== null &&
+                dado.temperatura !== undefined &&
+                dado.temperatura !== "" &&
+                Number.isFinite(Number(dado.temperatura));
+            const temperatura = temperaturaValida ? Number(dado.temperatura) : null;
 
             somaPh += ph;
-            somaTemp += temperatura;
+            quantidadePh++;
 
-            quantidade++;
+            if (temperatura !== null) {
+                somaTemp += temperatura;
+                quantidadeTemp++;
+            }
 
+            const statusPhAtual = statusPH(ph);
+            const statusTempAtual = temperatura === null
+                ? { texto: "Sem leitura", ideal: false }
+                : statusTemp(temperatura);
 
-            const statusPhAtual =
-                statusPH(ph);
+            const timestamp = Number(dado.timestamp) || Date.now();
+            const dataHora = formatarData(timestamp);
+            const leituraRecente = timestamp > 0 && (Date.now() - timestamp) <= 20000;
+            const statusSensor = dado._leituraAtual
+                ? (leituraRecente ? "Online" : "Offline — última leitura")
+                : (dado.sensor_online === false ? "Offline" : "Registro salvo");
 
-
-            const statusTempAtual =
-                statusTemp(temperatura);
-
-
-            const dataHora =
-                formatarData(
-                    dado.timestamp
-                );
-
-
-            const linha =
-                document.createElement("tr");
-
-
+            const linha = document.createElement("tr");
             linha.innerHTML = `
-
-                <td>
-                    ${dataHora.data}
-                    ${dataHora.hora}
-                </td>
-
-                <td>
-                    <strong>
-                        ${ph.toFixed(1).replace(".", ",")}
-                    </strong>
-                </td>
-
-                <td
-                    style="
-                        color:
-                        ${statusPhAtual.ideal
-                            ? "#059669"
-                            : "#dc2626"};
-                        font-weight:600;
-                    "
-                >
-                    ${statusPhAtual.texto}
-                </td>
-
-                <td>
-                    ${temperatura
-                        .toFixed(1)
-                        .replace(".", ",")} °C
-                </td>
-
-                <td
-                    style="
-                        color:
-                        ${statusTempAtual.ideal
-                            ? "#059669"
-                            : "#dc2626"};
-                    "
-                >
-                    ${statusTempAtual.texto}
-                </td>
-
-                <td>
-                    ${dado.sensor_online
-                        ? "Online"
-                        : "Offline"}
-                </td>
+                <td>${dataHora.data} ${dataHora.hora}</td>
+                <td><strong>${ph.toFixed(1).replace(".", ",")}</strong></td>
+                <td style="color:${statusPhAtual.ideal ? "#059669" : "#dc2626"};font-weight:600;">${statusPhAtual.texto}</td>
+                <td>${temperatura === null ? "—" : temperatura.toFixed(1).replace(".", ",") + " °C"}</td>
+                <td style="color:${statusTempAtual.ideal ? "#059669" : "#6b7280"};">${statusTempAtual.texto}</td>
+                <td>${statusSensor}</td>
             `;
-
-
-            corpo.appendChild(
-                linha
-            );
+            corpo.appendChild(linha);
         });
 
+    set("relatorioPhMedio", quantidadePh
+        ? (somaPh / quantidadePh).toFixed(1).replace(".", ",")
+        : "--");
 
-    if (quantidade > 0) {
+    set("relatorioTempMedia", quantidadeTemp
+        ? (somaTemp / quantidadeTemp).toFixed(1).replace(".", ",") + " °C"
+        : "—");
 
-        const mediaPh =
-            (
-                somaPh /
-                quantidade
-            )
-            .toFixed(1)
-            .replace(".", ",");
-
-
-        const mediaTemp =
-            (
-                somaTemp /
-                quantidade
-            )
-            .toFixed(1)
-            .replace(".", ",");
-
-
-        set(
-            "relatorioPhMedio",
-            mediaPh
-        );
-
-
-        set(
-            "relatorioTempMedia",
-            mediaTemp + " °C"
-        );
-
-
-        set(
-            "relatorioEstabilidade",
-            "94%"
-        );
-    }
+    set("relatorioEstabilidade", "--");
 }
 
 
