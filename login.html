@@ -494,133 +494,57 @@
 
 
         // Formulário de login
+        document.getElementById("formLogin").addEventListener("submit", async function(e) {
+            e.preventDefault();
 
-        document
-            .getElementById("formLogin")
-            .addEventListener("submit", function(e) {
+            const email = document.getElementById("email").value.trim();
+            const senha = document.getElementById("senha").value;
+            const msgBox = document.getElementById("mensagemErro");
+            const txtErro = document.getElementById("textoErro");
+            const msgSucesso = document.getElementById("mensagemSucesso");
+            const btn = document.getElementById("btnLogin");
 
-                e.preventDefault();
+            msgBox.hidden = true;
+            msgSucesso.hidden = true;
+            txtErro.textContent = "";
+            btn.disabled = true;
+            btn.innerHTML = '<span>⏳</span> Entrando...';
 
-
-                const email =
-                    document
-                        .getElementById("email")
-                        .value
-                        .trim();
-
-
-                const senha =
-                    document
-                        .getElementById("senha")
-                        .value;
-
-
-                const msgBox =
-                    document
-                        .getElementById("mensagemErro");
-
-
-                const txtErro =
-                    document
-                        .getElementById("textoErro");
-
-
-                const btn =
-                    document
-                        .getElementById("btnLogin");
-
-
-                msgBox.hidden = true;
-                document.getElementById("mensagemSucesso").hidden = true;
-                txtErro.textContent = "";
-
-                btn.disabled = true;
-
-                btn.innerHTML =
-                    '<span>⏳</span> Entrando...';
-
-
-                // Evita deixar o botão preso em "Entrando..." caso
-                // a comunicação com o Firebase não responda.
-                const loginFirebase = auth.signInWithEmailAndPassword(email, senha);
-                const limiteTempo = new Promise((_, reject) => {
-                    setTimeout(() => {
-                        const erro = new Error("A autenticação demorou mais de 15 segundos.");
+            let temporizador;
+            try {
+                const tentativa = auth.signInWithEmailAndPassword(email, senha);
+                const limite = new Promise((_, reject) => {
+                    temporizador = setTimeout(() => {
+                        const erro = new Error("Tempo limite excedido ao conectar com o Firebase.");
                         erro.code = "auth/timeout";
                         reject(erro);
                     }, 15000);
                 });
 
-                Promise.race([loginFirebase, limiteTempo])
+                await Promise.race([tentativa, limite]);
+                window.location.href = "dashboard.html";
+            } catch (error) {
+                console.error("Falha no login:", error);
+                msgBox.hidden = false;
 
-                    .then(() => {
+                const mensagens = {
+                    "auth/user-not-found": "Não existe uma conta cadastrada com esse e-mail.",
+                    "auth/wrong-password": "Senha incorreta. Confira a senha e tente novamente.",
+                    "auth/invalid-credential": "E-mail ou senha incorretos.",
+                    "auth/invalid-email": "O formato do e-mail é inválido.",
+                    "auth/too-many-requests": "Muitas tentativas. Aguarde alguns minutos e tente novamente.",
+                    "auth/user-disabled": "Esta conta foi desativada. Entre em contato com o responsável.",
+                    "auth/network-request-failed": "Falha de conexão com o Firebase. Verifique sua internet.",
+                    "auth/timeout": "O Firebase não respondeu em 15 segundos. Verifique a conexão e as configurações do projeto."
+                };
 
-                        window.location.href =
-                            "dashboard.html";
-
-                    })
-
-                    .catch(error => {
-
-                        btn.disabled = false;
-
-                        btn.innerHTML =
-                            '<span>↪</span> Entrar';
-
-
-                        msgBox.hidden = false;
-                        txtErro.textContent = "";
-
-                        if (
-                            error.code ===
-                                "auth/user-not-found" ||
-
-                            error.code ===
-                                "auth/wrong-password" ||
-
-                            error.code ===
-                                "auth/invalid-credential"
-                        ) {
-
-                            txtErro.textContent =
-                                "E-mail ou senha incorretos.";
-
-                        } else if (
-                            error.code ===
-                            "auth/invalid-email"
-                        ) {
-
-                            txtErro.textContent =
-                                "Formato de e-mail inválido.";
-
-                        } else if (
-                            error.code ===
-                            "auth/too-many-requests"
-                        ) {
-
-                            txtErro.textContent =
-                                "Muitas tentativas. Aguarde um momento.";
-
-                        } else if (
-                            error.code === "auth/user-disabled"
-                        ) {
-                            txtErro.textContent = "Esta conta foi desativada. Entre em contato com o responsável.";
-                        } else if (
-                            error.code === "auth/network-request-failed"
-                        ) {
-                            txtErro.textContent = "Falha de conexão com o Firebase. Verifique sua internet e tente novamente.";
-                        } else if (
-                            error.code === "auth/timeout"
-                        ) {
-                            txtErro.textContent = "O Firebase não respondeu. Confira sua conexão e se o domínio do site está autorizado em Authentication → Settings → Authorized domains.";
-                        } else {
-                            txtErro.textContent = "Não foi possível entrar. Tente novamente.";
-                            console.error("Erro de login:", error);
-                        }
-
-                    });
-
-            });
+                txtErro.textContent = mensagens[error.code] || ("Não foi possível entrar. " + (error.message || "Tente novamente."));
+            } finally {
+                clearTimeout(temporizador);
+                btn.disabled = false;
+                btn.innerHTML = '<span>↪</span> Entrar';
+            }
+        });
 
 
         // Recuperação de senha pelo Firebase Authentication
